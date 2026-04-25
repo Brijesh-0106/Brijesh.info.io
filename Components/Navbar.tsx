@@ -7,15 +7,28 @@ export default function Navbar() {
   console.log(pathname);
 
   return (
+    //  <div className="backdrop-blur-md  h-96 bg-white/5 p-6 rounded-xl border border-white/10"></div>
     <>
-      <nav className="text-white w-2xl bg-indigo-600 rounded-lg mx-auto p-3 mt-6 px-8">
-        <ul className="flex justify-around">
-          <Link href="/experience">Experience</Link>
-          <Link href="/info/projects">Projects</Link>
-          <Link href="/activity">Activity</Link>
-          <Link href="/qa">Q&A</Link>
-          <Link href="/contact">Contact</Link>
-        </ul>
+      <nav className="text-white absolute top-6 left-1/2 -translate-x-1/2 z-50">
+        <div className="relative p-[1px] rounded-xl bg-gradient-to-r from-purple-500 via-blue-500 to-purple-500 ">
+          <div className="bg-[#0B0F1A]/80 backdrop-blur-xl rounded-xl px-10 py-3 flex gap-10">
+            {[
+              { name: "Experience", path: "/experience" },
+              { name: "Projects", path: "/info/projects" },
+              { name: "Activity", path: "/activity" },
+              { name: "Q&A", path: "/qa" },
+              { name: "Contact", path: "/contact" },
+            ].map((item) => (
+              <Link
+                key={item.path}
+                href={item.path}
+                className={`relative hover:text-purple-400 transition`}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+        </div>
       </nav>
     </>
   );
