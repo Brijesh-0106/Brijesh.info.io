@@ -1,56 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { LeetCodeIcon } from "./Icons";
 
-type DayData = { date: string; count: number; level: 0 | 1 | 2 | 3 | 4 };
+type Level = 0 | 1 | 2 | 3 | 4;
+type DayData = { date: string; count: number; level: Level };
 
-function getLevel(count: number): 0 | 1 | 2 | 3 | 4 {
-  if (count === 0) return 0;
-  if (count <= 2) return 1;
-  if (count <= 5) return 2;
-  if (count <= 9) return 3;
-  return 4;
-}
-
-function buildCalendarGrid(
-  submissionCalendar: Record<string, number>,
-): DayData[] {
-  const today = new Date();
-  const oneYearAgo = new Date(today);
-  oneYearAgo.setFullYear(today.getFullYear() - 1);
-  oneYearAgo.setDate(oneYearAgo.getDate() - oneYearAgo.getDay()); // align to Sunday
-
-  const days: DayData[] = [];
-  const cursor = new Date(oneYearAgo);
-
-  while (cursor <= today) {
-    const ts = Math.floor(cursor.getTime() / 1000);
-    // LeetCode uses midnight UTC timestamps — check ±1 day window
-    const count =
-      submissionCalendar[String(ts)] ||
-      submissionCalendar[String(ts - 86400)] ||
-      submissionCalendar[String(ts + 86400)] ||
-      0;
-
-    days.push({
-      date: cursor.toISOString().split("T")[0],
-      count,
-      level: getLevel(count),
-    });
-
-    cursor.setDate(cursor.getDate() + 1);
-  }
-
-  return days;
-}
-
-const LC_COLORS = [
-  "bg-[#1a1a2e]", // 0 - empty
-  "bg-[#2d1b69]", // 1 - light
-  "bg-[#553a9a]", // 2 - medium
-  "bg-[#7c5cbf]", // 3 - strong
-  "bg-[#ffa116]", // 4 - max (LC orange)
-];
+const LC_COLORS: Record<Level, string> = {
+  0: "#161b22",
+  1: "#003d1f",
+  2: "#006d32",
+  3: "#26a641",
+  4: "#39d353",
+};
 
 const MONTHS = [
   "Jan",
@@ -67,9 +29,52 @@ const MONTHS = [
   "Dec",
 ];
 
-export default function LeetCodeHeatmap() {
+function getLevel(count: number): Level {
+  if (count === 0) return 0;
+  if (count <= 2) return 1;
+  if (count <= 5) return 2;
+  if (count <= 9) return 3;
+  return 4;
+}
+function buildGrid(calendar: Record<string, number>): DayData[] {
+  // June 1 2025, aligned to nearest Sunday before it
+  const start = new Date("2025-06-01");
+  start.setDate(start.getDate() - start.getDay());
+
+  // June 30 2026
+  const end = new Date("2026-06-30");
+
+  const days: DayData[] = [];
+  const cursor = new Date(start);
+
+  while (cursor <= end) {
+    const ts = Math.floor(cursor.getTime() / 1000);
+    const count =
+      calendar[String(ts)] ||
+      calendar[String(ts - 86400)] ||
+      calendar[String(ts + 86400)] ||
+      0;
+    days.push({
+      date: cursor.toISOString().split("T")[0],
+      count,
+      level: getLevel(count),
+    });
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  return days;
+}
+
+interface Props {
+  easy: number;
+  medium: number;
+  hard: number;
+  total: number;
+}
+
+export default function LeetCodeHeatmap({ easy, medium, hard, total }: Props) {
   const [days, setDays] = useState<DayData[]>([]);
-  const [totalSubmissions, setTotalSubmissions] = useState(0);
+  const [activeDays, setActive] = useState(0);
+  const [totalSubs, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -79,148 +84,392 @@ export default function LeetCodeHeatmap() {
         const raw: Record<string, number> = JSON.parse(
           data.submissionCalendar || "{}",
         );
-        const grid = buildCalendarGrid(raw);
-        setDays(grid);
-        setTotalSubmissions(Object.values(raw).reduce((a, b) => a + b, 0));
+        setDays(buildGrid(raw));
+        setActive(
+          data.activeDays || Object.values(raw).filter((v) => v > 0).length,
+        );
+        setTotal(Object.values(raw).reduce((a: number, b: number) => a + b, 0));
       })
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return (
-      <div className="w-full h-[120px] flex items-center justify-center">
-        <div className="w-4 h-4 border-2 border-[#ffa116] border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
-
-  // Build week columns (each column = 7 days)
+  // Build week columns
   const weeks: DayData[][] = [];
   for (let i = 0; i < days.length; i += 7) {
     weeks.push(days.slice(i, i + 7));
   }
 
-  // Month labels — find where each month starts
-  const monthLabels: { label: string; col: number }[] = [];
+  // Month label positions
+  const monthLabels: { label: string; index: number }[] = [];
   weeks.forEach((week, wi) => {
-    const firstOfMonth = week.find((d) => d.date.endsWith("-01"));
-    if (firstOfMonth) {
-      const month = new Date(firstOfMonth.date).getMonth();
-      monthLabels.push({ label: MONTHS[month], col: wi });
-    }
+    week.forEach((day) => {
+      if (day.date.slice(8) === "01") {
+        const m = parseInt(day.date.slice(5, 7)) - 1;
+        if (!monthLabels.find((ml) => ml.label === MONTHS[m])) {
+          monthLabels.push({ label: MONTHS[m], index: wi });
+        }
+      }
+    });
   });
-
-  const activeDays = days.filter((d) => d.count > 0).length;
 
   return (
     <div className="w-full">
-      {/* Header stats */}
-      <div className="flex items-center justify-between mb-5">
-        <div className="flex items-center gap-3">
-          <span className="text-lg">⚡</span>
+      {/* ── Header ── */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+          marginBottom: 24,
+        }}
+      >
+        {/* Left: icon + title */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div
+            style={{
+              color: "#ffa116",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 36,
+              height: 36,
+              background: "rgba(255,161,22,0.08)",
+              borderRadius: 8,
+              flexShrink: 0,
+            }}
+          >
+            <LeetCodeIcon size={20} />
+          </div>
           <div>
-            <p className="text-white text-sm font-bold tracking-wider font-mono">
+            <p
+              style={{
+                color: "#fff",
+                fontSize: 13,
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                fontFamily: "Space Mono, monospace",
+                marginBottom: 4,
+              }}
+            >
               LEETCODE
             </p>
-            <p className="text-gray-500 text-xs font-mono">
-              {totalSubmissions} submissions in the past year
+            {/* Profile link */}
+            <a
+              href="https://leetcode.com/u/phenomenal123"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 5,
+                color: "#475569",
+                fontSize: 11,
+                fontFamily: "Space Mono, monospace",
+                textDecoration: "none",
+                transition: "color 0.2s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#ffa116")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "#475569")}
+            >
+              @phenomenal123
+              {/* Inline SVG so no extra import needed */}
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ flexShrink: 0 }}
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </a>
+            <p
+              style={{
+                color: "#475569",
+                fontSize: 11,
+                fontFamily: "Space Mono, monospace",
+                marginTop: 4,
+              }}
+            >
+              {loading
+                ? "Loading..."
+                : `${totalSubs} submissions · Jun 2025 – Jun 2026`}
             </p>
           </div>
         </div>
-        <div className="flex gap-5">
-          <div className="text-right">
-            <p className="text-white text-lg font-bold font-mono">283</p>
-            <p className="text-gray-500 text-[10px] tracking-widest">SOLVED</p>
+
+        {/* Right: 3 stats — explicit gap so labels never touch */}
+        <div style={{ display: "flex", gap: 32 }}>
+          <div style={{ textAlign: "right" }}>
+            <p
+              style={{
+                color: "#fff",
+                fontSize: 22,
+                fontWeight: 700,
+                fontFamily: "Space Mono, monospace",
+                lineHeight: 1,
+              }}
+            >
+              {total}
+            </p>
+            <p
+              style={{
+                color: "#475569",
+                fontSize: 10,
+                fontFamily: "Space Mono, monospace",
+                marginTop: 4,
+                letterSpacing: "0.12em",
+                whiteSpace: "nowrap",
+              }}
+            >
+              SOLVED
+            </p>
           </div>
-          <div className="text-right">
-            <p className="text-white text-lg font-bold font-mono">
+          <div style={{ textAlign: "right" }}>
+            <p
+              style={{
+                color: "#fff",
+                fontSize: 22,
+                fontWeight: 700,
+                fontFamily: "Space Mono, monospace",
+                lineHeight: 1,
+              }}
+            >
               {activeDays}
             </p>
-            <p className="text-gray-500 text-[10px] tracking-widest">
+            <p
+              style={{
+                color: "#475569",
+                fontSize: 10,
+                fontFamily: "Space Mono, monospace",
+                marginTop: 4,
+                letterSpacing: "0.12em",
+                whiteSpace: "nowrap",
+              }}
+            >
               ACTIVE DAYS
             </p>
           </div>
-          <div className="text-right">
-            <p className="text-[#ffa116] text-lg font-bold font-mono">TOP 6%</p>
-            <p className="text-gray-500 text-[10px] tracking-widest">GLOBAL</p>
+          <div style={{ textAlign: "right" }}>
+            <p
+              style={{
+                color: "#39d353",
+                fontSize: 22,
+                fontWeight: 700,
+                fontFamily: "Space Mono, monospace",
+                lineHeight: 1,
+              }}
+            >
+              TOP 6%
+            </p>
+            <p
+              style={{
+                color: "#475569",
+                fontSize: 10,
+                fontFamily: "Space Mono, monospace",
+                marginTop: 4,
+                letterSpacing: "0.12em",
+                whiteSpace: "nowrap",
+              }}
+            >
+              GLOBAL
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Month labels */}
-      <div className="relative mb-1" style={{ paddingLeft: "0px" }}>
+      {/* ── Heatmap or loader ── */}
+      {loading ? (
         <div
-          className="grid text-[10px] text-gray-500 font-mono"
-          style={{ gridTemplateColumns: `repeat(${weeks.length}, 1fr)` }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: 120,
+          }}
         >
-          {monthLabels.map(({ label, col }) => (
-            <span
-              key={label + col}
-              style={{ gridColumnStart: col + 1 }}
-              className="col-span-4"
-            >
-              {label}
-            </span>
-          ))}
+          <div
+            style={{
+              width: 20,
+              height: 20,
+              border: "2px solid #39d353",
+              borderTopColor: "transparent",
+              borderRadius: "50%",
+              animation: "spin 0.8s linear infinite",
+            }}
+          />
+          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
         </div>
-      </div>
+      ) : (
+        <>
+          {/* Month labels row */}
+          <div style={{ display: "flex", marginBottom: 4 }}>
+            {weeks.map((_, wi) => {
+              const ml = monthLabels.find((m) => m.index === wi);
+              return (
+                <div key={wi} style={{ flex: 1, minWidth: 0 }}>
+                  {ml && (
+                    <span
+                      style={{
+                        fontSize: 10,
+                        color: "#475569",
+                        fontFamily: "Space Mono, monospace",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {ml.label}
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
 
-      {/* Heatmap grid */}
+          {/* Grid — flex columns */}
+          <div style={{ display: "flex", gap: 3, width: "100%" }}>
+            {weeks.map((week, wi) => (
+              <div
+                key={wi}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 3,
+                  flex: 1,
+                  minWidth: 0,
+                }}
+              >
+                {Array.from({ length: 7 }).map((_, di) => {
+                  const day = week[di];
+                  return (
+                    <div
+                      key={di}
+                      title={day ? `${day.date}: ${day.count} submissions` : ""}
+                      style={{
+                        backgroundColor: day
+                          ? LC_COLORS[day.level]
+                          : LC_COLORS[0],
+                        borderRadius: 2,
+                        width: "100%",
+                        aspectRatio: "1 / 1",
+                      }}
+                    />
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+
+          {/* Legend */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              gap: 4,
+              marginTop: 8,
+              fontSize: 10,
+              color: "#475569",
+              fontFamily: "Space Mono, monospace",
+            }}
+          >
+            <span>Less</span>
+            {([0, 1, 2, 3, 4] as Level[]).map((l) => (
+              <div
+                key={l}
+                style={{
+                  backgroundColor: LC_COLORS[l],
+                  width: 10,
+                  height: 10,
+                  borderRadius: 2,
+                  border: l === 0 ? "1px solid #30363d" : "none",
+                }}
+              />
+            ))}
+            <span>More</span>
+          </div>
+        </>
+      )}
+
+      {/* ── Difficulty pills ── */}
       <div
-        className="grid gap-[3px]"
-        style={{ gridTemplateColumns: `repeat(${weeks.length}, 1fr)` }}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr",
+          gap: 12,
+          marginTop: 20,
+        }}
       >
-        {weeks.map((week, wi) =>
-          week.map((day, di) => (
-            <div
-              key={day.date}
-              title={`${day.date}: ${day.count} submissions`}
-              className={`${LC_COLORS[day.level]} rounded-[2px] aspect-square w-full cursor-pointer
-                transition-opacity hover:opacity-80`}
-              style={{ gridColumn: wi + 1, gridRow: di + 1 }}
-            />
-          )),
-        )}
-      </div>
-
-      {/* Legend */}
-      <div className="flex items-center justify-end gap-1.5 mt-2 font-mono text-[10px] text-gray-500">
-        <span>Less</span>
-        {LC_COLORS.map((c, i) => (
-          <div key={i} className={`${c} w-2.5 h-2.5 rounded-[2px]`} />
-        ))}
-        <span>More</span>
-      </div>
-
-      {/* Difficulty pills */}
-      <div className="grid grid-cols-3 gap-3 mt-5">
         {[
           {
             label: "Easy",
-            count: 169,
-            color: "text-[#00b8a9]",
-            dot: "bg-[#00b8a9]",
+            count: easy,
+            color: "#00b8a9",
+            bg: "rgba(0,184,169,0.08)",
+            border: "rgba(0,184,169,0.25)",
           },
           {
             label: "Medium",
-            count: 105,
-            color: "text-[#ffa116]",
-            dot: "bg-[#ffa116]",
+            count: medium,
+            color: "#ffa116",
+            bg: "rgba(255,161,22,0.08)",
+            border: "rgba(255,161,22,0.25)",
           },
           {
             label: "Hard",
-            count: 9,
-            color: "text-[#ef4743]",
-            dot: "bg-[#ef4743]",
+            count: hard,
+            color: "#ef4743",
+            bg: "rgba(239,71,67,0.08)",
+            border: "rgba(239,71,67,0.25)",
           },
-        ].map(({ label, count, color, dot }) => (
+        ].map(({ label, count, color, bg, border }) => (
           <div
             key={label}
-            className="flex items-center gap-2 bg-white/[0.03] border border-white/[0.07] rounded-lg px-3 py-2.5"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              background: bg,
+              border: `1px solid ${border}`,
+              borderRadius: 8,
+              padding: "10px 14px",
+            }}
           >
-            <div className={`${dot} w-2 h-2 rounded-full flex-shrink-0`} />
-            <span className="text-gray-500 text-xs font-mono">{label}</span>
-            <span className={`${color} text-sm font-bold font-mono ml-auto`}>
+            {/* Dot */}
+            <div
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: "50%",
+                background: color,
+                flexShrink: 0,
+              }}
+            />
+            {/* Label */}
+            <span
+              style={{
+                color: "#94a3b8",
+                fontSize: 12,
+                fontFamily: "Space Mono, monospace",
+              }}
+            >
+              {label}
+            </span>
+            {/* Count — pushed to right */}
+            <span
+              style={{
+                color,
+                fontSize: 16,
+                fontWeight: 700,
+                fontFamily: "Space Mono, monospace",
+                marginLeft: "auto",
+              }}
+            >
               {count}
             </span>
           </div>

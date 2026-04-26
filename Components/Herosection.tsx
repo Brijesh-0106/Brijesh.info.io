@@ -24,7 +24,7 @@ export default function Herosection() {
                 <p className="text-4xl font-semibold mb-8 mt-2 font-[montserrat_alternates]">
                   Software Engineer.
                 </p>
-                <div className="text-green-500 gap-1 flex items-center font-xl rounded-2xl font-[montserrat_alternates] font-extrabold">
+                <div className="text-green-500 gap-1 flex items-center font-xl rounded-2xl ">
                   <span className="bg-green-500 rounded-full w-2 h-2"></span>{" "}
                   <span className="text-md">Open for new Opportunities</span>
                 </div>
