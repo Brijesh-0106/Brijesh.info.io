@@ -110,7 +110,7 @@ export default function HeroBackground() {
       className="h-screen"
       style={{
         position: "absolute", // covers entire parent
-        width: "80%",
+        width: "70%",
         zIndex: 0,
       }}
     />
