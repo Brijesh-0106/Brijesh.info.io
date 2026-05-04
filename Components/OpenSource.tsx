@@ -107,9 +107,9 @@ function RepoRow({ repo }: { repo: Repo }) {
   return (
     <div
       style={{
-        background: "#0d1117",
-        border: "1px solid rgba(255,255,255,0.07)",
-        borderRadius: 12,
+        background: "#09090b",
+        border: "1px solid rgba(255,255,255,0.05)",
+        borderRadius: 16,
         overflow: "hidden",
         transition: "border-color 0.2s",
       }}
@@ -120,7 +120,6 @@ function RepoRow({ repo }: { repo: Repo }) {
         (e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)")
       }
     >
-      {/* Repo header row — clickable to expand */}
       <button
         onClick={() => setOpen((o) => !o)}
         style={{
@@ -152,9 +151,9 @@ function RepoRow({ repo }: { repo: Repo }) {
         <span
           style={{
             color: "#fff",
-            fontSize: 14,
-            fontWeight: 600,
-            fontFamily: "Space Mono, monospace",
+            fontSize: 15,
+            fontWeight: 700,
+            fontFamily: "inherit",
             flex: 1,
           }}
         >
@@ -164,7 +163,7 @@ function RepoRow({ repo }: { repo: Repo }) {
         {/* PR count */}
         <span
           style={{
-            color: "#475569",
+            color: "#94a3b8",
             fontSize: 12,
             fontFamily: "Space Mono, monospace",
             marginRight: 12,

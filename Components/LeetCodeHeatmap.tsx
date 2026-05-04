@@ -41,8 +41,8 @@ function buildGrid(calendar: Record<string, number>): DayData[] {
   const start = new Date("2025-06-01");
   start.setDate(start.getDate() - start.getDay());
 
-  // June 30 2026
-  const end = new Date("2026-06-30");
+  // May 31 2026
+  const end = new Date("2026-05-31");
 
   const days: DayData[] = [];
   const cursor = new Date(start);
@@ -116,12 +116,7 @@ export default function LeetCodeHeatmap({ easy, medium, hard, total }: Props) {
     <div className="w-full">
       {/* ── Header ── */}
       <div
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          justifyContent: "space-between",
-          marginBottom: 24,
-        }}
+        className="flex flex-col md:flex-row md:items-start justify-between mb-6 gap-4"
       >
         {/* Left: icon + title */}
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -144,27 +139,26 @@ export default function LeetCodeHeatmap({ easy, medium, hard, total }: Props) {
             <p
               style={{
                 color: "#fff",
-                fontSize: 13,
+                fontSize: 14,
                 fontWeight: 700,
                 letterSpacing: "0.1em",
-                fontFamily: "Space Mono, monospace",
+                fontFamily: "inherit",
+                textTransform: "uppercase",
                 marginBottom: 4,
               }}
             >
-              LEETCODE
+              Leetcode
             </p>
             {/* Profile link */}
             <a
               href="https://leetcode.com/u/phenomenal123"
               target="_blank"
               rel="noopener noreferrer"
+              className="text-slate-400 hover:text-cyan-400 text-xs font-mono transition-colors duration-200"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 5,
-                color: "#475569",
-                fontSize: 11,
-                fontFamily: "Space Mono, monospace",
                 textDecoration: "none",
                 transition: "color 0.2s",
               }}
@@ -189,23 +183,12 @@ export default function LeetCodeHeatmap({ easy, medium, hard, total }: Props) {
                 <line x1="10" y1="14" x2="21" y2="3" />
               </svg>
             </a>
-            <p
-              style={{
-                color: "#475569",
-                fontSize: 11,
-                fontFamily: "Space Mono, monospace",
-                marginTop: 4,
-              }}
-            >
-              {loading
-                ? "Loading..."
-                : `${totalSubs} submissions · Jun 2025 – Jun 2026`}
-            </p>
+
           </div>
         </div>
 
         {/* Right: 3 stats — explicit gap so labels never touch */}
-        <div style={{ display: "flex", gap: 32 }}>
+        <div className="flex gap-4 md:gap-8 justify-between md:justify-start w-full md:w-auto">
           <div style={{ textAlign: "right" }}>
             <p
               style={{
@@ -308,61 +291,61 @@ export default function LeetCodeHeatmap({ easy, medium, hard, total }: Props) {
         </div>
       ) : (
         <>
-          {/* Month labels row */}
-          <div style={{ display: "flex", marginBottom: 4 }}>
-            {weeks.map((_, wi) => {
-              const ml = monthLabels.find((m) => m.index === wi);
-              return (
-                <div key={wi} style={{ flex: 1, minWidth: 0 }}>
-                  {ml && (
-                    <span
-                      style={{
-                        fontSize: 10,
-                        color: "#475569",
-                        fontFamily: "Space Mono, monospace",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {ml.label}
-                    </span>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+          <div className="overflow-x-auto no-scrollbar pb-2">
+            {/* Month labels row */}
+            <div style={{ display: "flex", gap: 4, width: "max-content", marginBottom: 8, height: 16 }}>
+              {weeks.map((_, wi) => {
+                const ml = monthLabels.find((m) => m.index === wi);
+                return (
+                  <div key={wi} style={{ width: 14 }}>
+                    {ml && (
+                      <span
+                        style={{
+                          fontSize: 12,
+                          color: "#94a3b8",
+                          fontFamily: "var(--font-fira-code), monospace",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {ml.label}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
 
-          {/* Grid — flex columns */}
-          <div style={{ display: "flex", gap: 3, width: "100%" }}>
-            {weeks.map((week, wi) => (
-              <div
-                key={wi}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 3,
-                  flex: 1,
-                  minWidth: 0,
-                }}
-              >
-                {Array.from({ length: 7 }).map((_, di) => {
-                  const day = week[di];
-                  return (
-                    <div
-                      key={di}
-                      title={day ? `${day.date}: ${day.count} submissions` : ""}
-                      style={{
-                        backgroundColor: day
-                          ? LC_COLORS[day.level]
-                          : LC_COLORS[0],
-                        borderRadius: 2,
-                        width: "100%",
-                        aspectRatio: "1 / 1",
-                      }}
-                    />
-                  );
-                })}
-              </div>
-            ))}
+            {/* Grid — flex columns */}
+            <div style={{ display: "flex", gap: 4, width: "max-content" }}>
+              {weeks.map((week, wi) => (
+                <div
+                  key={wi}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: 4,
+                  }}
+                >
+                  {Array.from({ length: 7 }).map((_, di) => {
+                    const day = week[di];
+                    return (
+                      <div
+                        key={di}
+                        title={day ? `${day.date}: ${day.count} submissions` : ""}
+                        style={{
+                          backgroundColor: day
+                            ? LC_COLORS[day.level]
+                            : LC_COLORS[0],
+                          borderRadius: 2,
+                          width: 14,
+                          height: 14,
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Legend */}
@@ -370,7 +353,7 @@ export default function LeetCodeHeatmap({ easy, medium, hard, total }: Props) {
             style={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "flex-end",
+              justifyContent: "space-between",
               gap: 4,
               marginTop: 8,
               fontSize: 10,
@@ -378,32 +361,43 @@ export default function LeetCodeHeatmap({ easy, medium, hard, total }: Props) {
               fontFamily: "Space Mono, monospace",
             }}
           >
-            <span>Less</span>
-            {([0, 1, 2, 3, 4] as Level[]).map((l) => (
-              <div
-                key={l}
-                style={{
-                  backgroundColor: LC_COLORS[l],
-                  width: 10,
-                  height: 10,
-                  borderRadius: 2,
-                  border: l === 0 ? "1px solid #30363d" : "none",
-                }}
-              />
-            ))}
-            <span>More</span>
+            <p
+              style={{
+                color: "#94A3B8",
+                fontSize: 14,
+                fontFamily: "Space Mono, monospace",
+                marginTop: 4,
+              }}
+            >
+              {loading
+                ? "Loading..."
+                : `${totalSubs} submissions · Jun 2025 – May 2026`}
+            </p>
+            <div style={{ display: "flex", gap: 4, fontSize: "14px", alignItems: "center", color: "#8b99ad" }}>
+              <span style={{ marginRight: "0.4em" }}>Less</span>
+              {([0, 1, 2, 3, 4] as Level[]).map((l) => (
+                <div
+                  key={l}
+                  style={{
+                    backgroundColor: LC_COLORS[l],
+                    width: 14,
+                    height: 14,
+                    borderRadius: 2,
+                    border: l === 0 ? "1px solid #30363d" : "none",
+                  }}
+                />
+              ))}
+              <span style={{ marginLeft: "0.4em" }}>More</span>
+            </div>
           </div>
         </>
       )}
+      {/* <div> */}
 
+      {/* </div> */}
       {/* ── Difficulty pills ── */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr 1fr",
-          gap: 12,
-          marginTop: 20,
-        }}
+      {/* <div
+        className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-5"
       >
         {[
           {
@@ -440,7 +434,6 @@ export default function LeetCodeHeatmap({ easy, medium, hard, total }: Props) {
               padding: "10px 14px",
             }}
           >
-            {/* Dot */}
             <div
               style={{
                 width: 8,
@@ -450,31 +443,30 @@ export default function LeetCodeHeatmap({ easy, medium, hard, total }: Props) {
                 flexShrink: 0,
               }}
             />
-            {/* Label */}
-            <span
-              style={{
-                color: "#94a3b8",
-                fontSize: 12,
-                fontFamily: "Space Mono, monospace",
-              }}
-            >
-              {label}
-            </span>
-            {/* Count — pushed to right */}
-            <span
-              style={{
-                color,
-                fontSize: 16,
-                fontWeight: 700,
-                fontFamily: "Space Mono, monospace",
-                marginLeft: "auto",
-              }}
-            >
-              {count}
-            </span>
-          </div>
-        ))}
-      </div>
+      <span
+        style={{
+          color: "#94a3b8",
+          fontSize: 12,
+          fontFamily: "Space Mono, monospace",
+        }}
+      >
+        {label}
+      </span>
+      <span
+        style={{
+          color,
+          fontSize: 16,
+          fontWeight: 700,
+          fontFamily: "Space Mono, monospace",
+          marginLeft: "auto",
+        }}
+      >
+        {count}
+      </span>
     </div>
+  ))
+}
+      </div > */}
+    </div >
   );
 }

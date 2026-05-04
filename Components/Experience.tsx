@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 type ExpItem = {
   role: string;
@@ -47,21 +48,27 @@ const EXPERIENCE: ExpItem[] = [
     ],
     stack: ["Next.js", "Node.js", "PostgreSQL", "Docker"],
   },
-  // Add more experience items here
+  {
+    role: "Student",
+    company: "GTU",
+    period: "2020 – 2024",
+    current: false,
+    website: "https://gtu.ac.in",
+    linkedin: "https://linkedin.com/company/jspark-ai",
+    description:
+      "Working as a full-stack developer building scalable web applications and backend systems.",
+    bullets: [
+      "Built a multi-role CRM system with RBAC, enabling structured workflows.",
+      "Built a weather forecast platform using IMD datasets for real-time data delivery.",
+      "Contributing to end-to-end feature development across frontend and backend.",
+    ],
+    stack: ["Next.js", "Node.js", "PostgreSQL", "Docker"],
+  },
 ];
 
 function WebIcon() {
   return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10" />
       <line x1="2" y1="12" x2="22" y2="12" />
       <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
@@ -78,326 +85,168 @@ function LinkedInIcon() {
   );
 }
 
-export default function Experience() {
-  const [expanded, setExpanded] = useState<number>(0);
+function ExperienceCard({ exp, progress, index, total }: { exp: ExpItem; progress: any; index: number; total: number }) {
+  // Determine strictly increasing points between 0 and 1 for WAAPI compatibility
+  const step = 1 / total;
+  const start = index * step;
+  const end = (index + 1) * step;
+  const margin = step * 0.2;
+
+  const p1 = index === 0 ? 0 : start;
+  const p2 = index === 0 ? 0.0001 : start + margin;
+  const p3 = index === total - 1 ? 0.9999 : end - margin;
+  const p4 = index === total - 1 ? 1 : end;
+
+  const opacityValues = index === 0 ? [1, 1, 1, 0] : index === total - 1 ? [0, 1, 1, 1] : [0, 1, 1, 0];
+  const yValues = index === 0 ? [0, 0, 0, -50] : index === total - 1 ? [50, 0, 0, 0] : [50, 0, 0, -50];
+  const scaleValues = index === 0 ? [1, 1, 1, 0.9] : index === total - 1 ? [0.9, 1, 1, 1] : [0.9, 1, 1, 0.9];
+
+  // Fade in, hold, fade out
+  const opacity = useTransform(
+    progress,
+    [p1, p2, p3, p4],
+    opacityValues
+  );
+
+  // Slide up from bottom, then slide out to top
+  const y = useTransform(
+    progress,
+    [p1, p2, p3, p4],
+    yValues
+  );
+
+  const scale = useTransform(
+    progress,
+    [p1, p2, p3, p4],
+    scaleValues
+  );
+
+  // Prevent pointer events when invisible to allow clicking links
+  const pointerEvents = useTransform(opacity, (o) => (o > 0.5 ? "auto" : "none"));
 
   return (
-    <div className="w-full mx-auto mt-24 px-4" style={{ maxWidth: "70%" }}>
-      {/* Section heading */}
-
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 12,
-          marginBottom: 40,
-        }}
-      >
-        <div
-          style={{
-            color: "#00e5a0",
-            background: "rgba(0,229,160,0.08)",
-            border: "1px solid rgba(0,229,160,0.2)",
-            borderRadius: 8,
-            padding: 8,
-            display: "flex",
-          }}
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <rect x="2" y="7" width="20" height="14" rx="2" />
-            <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
-          </svg>
-        </div>
-        <h2
-          style={{
-            color: "#fff",
-            fontFamily: "Syne, sans-serif",
-            fontSize: "clamp(24px, 3vw, 36px)",
-            fontWeight: 800,
-          }}
-        >
-          Experience
-        </h2>
-      </div>
-
-      {/* Timeline */}
-      <div style={{ position: "relative", paddingLeft: 32 }}>
-        {/* Vertical line */}
-        <div
-          style={{
-            position: "absolute",
-            left: 6,
-            top: 8,
-            bottom: 8,
-            width: 1,
-            background:
-              "linear-gradient(to bottom, rgba(0,229,160,0.5), rgba(0,229,160,0.05))",
-          }}
-        />
-
-        {EXPERIENCE.map((exp, i) => (
-          <div
-            key={i}
-            style={{
-              position: "relative",
-              marginBottom: 40,
-              cursor: "pointer",
-            }}
-            onClick={() => setExpanded(expanded === i ? -1 : i)}
-          >
-            {/* Timeline dot */}
-            <div
-              style={{
-                position: "absolute",
-                left: -30,
-                top: 4,
-                width: 12,
-                height: 12,
-                borderRadius: "50%",
-                background: expanded === i ? "#00e5a0" : "#1e3a2f",
-                border: `2px solid ${expanded === i ? "#00e5a0" : "#2d4a3e"}`,
-                transition: "all 0.2s",
-                boxShadow:
-                  expanded === i ? "0 0 12px rgba(0,229,160,0.5)" : "none",
-              }}
-            />
-
-            {/* Header row */}
-            <div
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                justifyContent: "space-between",
-                marginBottom: 8,
-              }}
-            >
-              <div>
-                <h3
-                  style={{
-                    color: "#fff",
-                    fontSize: 18,
-                    fontWeight: 700,
-                    fontFamily: "Syne, sans-serif",
-                    marginBottom: 6,
-                  }}
-                >
-                  {exp.role}
-                </h3>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 10,
-                    flexWrap: "wrap",
-                  }}
-                >
-                  <span
-                    style={{
-                      color: "#00e5a0",
-                      fontSize: 13,
-                      fontWeight: 600,
-                      fontFamily: "Space Mono, monospace",
-                    }}
-                  >
-                    {exp.company}
+    <motion.div
+      style={{ opacity, y, scale, pointerEvents }}
+      className="absolute inset-0 flex flex-col justify-center items-center w-full"
+    >
+      <div className="w-full max-w-3xl bg-[var(--color-glass)] backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl relative overflow-hidden group">
+        
+        {/* Glow effect */}
+        <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-violet-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl blur-xl" />
+        
+        <div className="relative z-10">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4">
+            <div>
+              <h3 className="text-2xl font-bold text-white mb-2 font-heading">{exp.role}</h3>
+              <div className="flex items-center gap-3 flex-wrap">
+                <span className="text-cyan-400 font-semibold font-mono">{exp.company}</span>
+                
+                {exp.website && (
+                  <a href={exp.website} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors">
+                    <WebIcon />
+                  </a>
+                )}
+                {exp.linkedin && (
+                  <a href={exp.linkedin} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-blue-500 transition-colors">
+                    <LinkedInIcon />
+                  </a>
+                )}
+                
+                {exp.current && (
+                  <span className="text-[10px] font-bold tracking-widest font-mono text-cyan-400 bg-cyan-400/10 border border-cyan-400/30 rounded px-2 py-0.5">
+                    CURRENT
                   </span>
-
-                  {/* Web link */}
-                  {exp.website && (
-                    <a
-                      href={exp.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      style={{ color: "#475569", transition: "color 0.2s" }}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.color = "#00e5a0")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.color = "#475569")
-                      }
-                    >
-                      <WebIcon />
-                    </a>
-                  )}
-
-                  {/* LinkedIn link */}
-                  {exp.linkedin && (
-                    <a
-                      href={exp.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                      style={{ color: "#475569", transition: "color 0.2s" }}
-                      onMouseEnter={(e) =>
-                        (e.currentTarget.style.color = "#0077b5")
-                      }
-                      onMouseLeave={(e) =>
-                        (e.currentTarget.style.color = "#475569")
-                      }
-                    >
-                      <LinkedInIcon />
-                    </a>
-                  )}
-
-                  {/* Current badge */}
-                  {exp.current && (
-                    <span
-                      style={{
-                        fontSize: 10,
-                        fontWeight: 700,
-                        letterSpacing: "0.1em",
-                        fontFamily: "Space Mono, monospace",
-                        color: "#00e5a0",
-                        background: "rgba(0,229,160,0.1)",
-                        border: "1px solid rgba(0,229,160,0.3)",
-                        borderRadius: 4,
-                        padding: "2px 8px",
-                      }}
-                    >
-                      CURRENT
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              {/* Period */}
-              <span
-                style={{
-                  color: "#00e5a0",
-                  fontSize: 12,
-                  fontWeight: 600,
-                  fontFamily: "Space Mono, monospace",
-                  whiteSpace: "nowrap",
-                  marginLeft: 16,
-                  marginTop: 2,
-                }}
-              >
-                {exp.period}
-              </span>
-            </div>
-
-            {/* Expandable content */}
-            <div
-              style={{
-                overflow: "hidden",
-                maxHeight: expanded === i ? 600 : 0,
-                opacity: expanded === i ? 1 : 0,
-                transition: "max-height 0.35s ease, opacity 0.25s ease",
-              }}
-            >
-              <p
-                style={{
-                  color: "#94a3b8",
-                  fontSize: 14,
-                  lineHeight: 1.8,
-                  fontFamily: "Space Mono, monospace",
-                  marginBottom: 16,
-                }}
-              >
-                {exp.description}
-              </p>
-
-              {/* Bullet points */}
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 10,
-                  marginBottom: 20,
-                }}
-              >
-                {exp.bullets.map((b, bi) => (
-                  <div
-                    key={bi}
-                    style={{
-                      display: "flex",
-                      gap: 12,
-                      alignItems: "flex-start",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: 18,
-                        height: 18,
-                        borderRadius: "50%",
-                        background: "#1e2530",
-                        border: "1px solid #2d3748",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                        marginTop: 1,
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: 5,
-                          height: 5,
-                          borderRadius: "50%",
-                          background: "#475569",
-                        }}
-                      />
-                    </div>
-                    <span
-                      style={{
-                        color: "#94a3b8",
-                        fontSize: 13,
-                        lineHeight: 1.7,
-                        fontFamily: "Space Mono, monospace",
-                      }}
-                    >
-                      {b}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Stack tags */}
-              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                {exp.stack.map((s) => (
-                  <span
-                    key={s}
-                    style={{
-                      fontSize: 11,
-                      fontFamily: "Space Mono, monospace",
-                      color: "#00e5a0",
-                      background: "rgba(0,229,160,0.06)",
-                      border: "1px solid rgba(0,229,160,0.2)",
-                      borderRadius: 4,
-                      padding: "3px 10px",
-                    }}
-                  >
-                    {s}
-                  </span>
-                ))}
+                )}
               </div>
             </div>
-
-            {/* Collapsed hint */}
-            {expanded !== i && (
-              <p
-                style={{
-                  color: "#2d4a3e",
-                  fontSize: 12,
-                  fontFamily: "Space Mono, monospace",
-                  marginTop: 4,
-                }}
-              >
-                click to expand ↓
-              </p>
-            )}
+            
+            <span className="text-violet-400 text-sm font-semibold font-mono whitespace-nowrap bg-violet-500/10 px-3 py-1 rounded-full border border-violet-500/20">
+              {exp.period}
+            </span>
           </div>
-        ))}
+
+          <p className="text-slate-300 text-sm leading-relaxed mb-6 font-sans">
+            {exp.description}
+          </p>
+
+          <ul className="flex flex-col gap-3 mb-6">
+            {exp.bullets.map((b, i) => (
+              <li key={i} className="flex gap-3 items-start">
+                <div className="w-5 h-5 rounded-full bg-slate-800/50 border border-slate-700 flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
+                </div>
+                <span className="text-slate-300 text-sm leading-relaxed font-sans">{b}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex flex-wrap gap-2">
+            {exp.stack.map((s) => (
+              <span key={s} className="text-xs font-mono text-violet-300 bg-violet-500/10 border border-violet-500/20 rounded px-2.5 py-1">
+                {s}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+export default function Experience() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  // Calculate height based on number of items to ensure smooth scrolling
+  const containerHeight = `${EXPERIENCE.length * 100}vh`;
+
+  return (
+    <div className="relative w-full" style={{ height: containerHeight }} ref={containerRef}>
+      {/* Sticky container that stays on screen while scrolling through the parent */}
+      <div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center px-4 md:px-8 overflow-hidden">
+        
+        <div className="absolute top-20 w-full flex justify-center z-20">
+          <div className="flex items-center gap-3">
+            <div className="text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 rounded-lg p-2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" />
+                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+              </svg>
+            </div>
+            <h2 className="text-white text-3xl md:text-5xl font-extrabold font-heading tracking-tight">
+              Experience
+            </h2>
+          </div>
+        </div>
+
+        {/* Timeline progress bar */}
+        <div className="absolute left-4 md:left-12 top-1/4 bottom-1/4 w-1 bg-slate-800 rounded-full overflow-hidden z-20 hidden md:block">
+          <motion.div 
+            className="w-full bg-gradient-to-b from-cyan-400 to-violet-500 origin-top"
+            style={{ scaleY: smoothProgress }}
+          />
+        </div>
+
+        <div className="relative w-full max-w-5xl mx-auto h-[600px]">
+          {EXPERIENCE.map((exp, i) => (
+            <ExperienceCard 
+              key={i} 
+              exp={exp} 
+              index={i} 
+              total={EXPERIENCE.length} 
+              progress={smoothProgress} 
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

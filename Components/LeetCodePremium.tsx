@@ -11,10 +11,10 @@ export default function LeetCodePremium() {
         const statsArray = data.data.matchedUser.submitStats.acSubmissionNum;
 
         const formatted = {
-          total: statsArray.find((s) => s.difficulty === "All")?.count || 0,
-          easy: statsArray.find((s) => s.difficulty === "Easy")?.count || 0,
-          medium: statsArray.find((s) => s.difficulty === "Medium")?.count || 0,
-          hard: statsArray.find((s) => s.difficulty === "Hard")?.count || 0,
+          total: statsArray.find((s: any) => s.difficulty === "All")?.count || 0,
+          easy: statsArray.find((s: any) => s.difficulty === "Easy")?.count || 0,
+          medium: statsArray.find((s: any) => s.difficulty === "Medium")?.count || 0,
+          hard: statsArray.find((s: any) => s.difficulty === "Hard")?.count || 0,
         };
 
         setStats(formatted);
