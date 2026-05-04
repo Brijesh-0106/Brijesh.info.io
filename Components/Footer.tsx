@@ -55,7 +55,7 @@ function FooterSocials() {
 
 export default function Footer() {
   return (
-    <footer className="w-full border-t border-white/5 py-8 mt-12 bg-black">
+    <footer className="w-full border-t border-white/5 py-6 md:py-8 mt-4 md:mt-12 bg-black">
       <div className="w-full max-w-5xl mx-auto px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-4">
         <p className="text-slate-500 font-sans text-sm">
           © {new Date().getFullYear()} Shah Brijesh. All rights reserved.

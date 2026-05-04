@@ -60,8 +60,8 @@ export default function Contact() {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto mt-32 mb-24 px-4 md:px-8">
-      <div className="flex flex-col items-center text-center mb-16">
+    <div className="w-full max-w-5xl mx-auto mt-16 md:mt-32 mb-8 md:mb-16 px-4 md:px-8">
+      <div className="flex flex-col items-center text-center mb-8 md:mb-16">
         <h2 className="text-3xl md:text-5xl font-extrabold font-heading text-white tracking-tight mb-4">
           Let's Connect
         </h2>

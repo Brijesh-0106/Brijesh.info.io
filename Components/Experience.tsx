@@ -129,60 +129,60 @@ function ExperienceCard({ exp, progress, index, total }: { exp: ExpItem; progres
       style={{ opacity, y, scale, pointerEvents }}
       className="absolute inset-0 flex flex-col justify-center items-center w-full"
     >
-      <div className="w-full max-w-3xl bg-[var(--color-glass)] backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl relative overflow-hidden group">
+      <div className="w-full max-w-3xl bg-[var(--color-glass)] backdrop-blur-xl border border-white/10 rounded-2xl p-5 md:p-8 shadow-2xl relative overflow-hidden group">
         
         {/* Glow effect */}
         <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-violet-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl blur-xl" />
         
         <div className="relative z-10">
-          <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-6 gap-4">
-            <div>
-              <h3 className="text-2xl font-bold text-white mb-2 font-heading">{exp.role}</h3>
-              <div className="flex items-center gap-3 flex-wrap">
-                <span className="text-cyan-400 font-semibold font-mono">{exp.company}</span>
-                
-                {exp.website && (
-                  <a href={exp.website} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors">
-                    <WebIcon />
-                  </a>
-                )}
-                {exp.linkedin && (
-                  <a href={exp.linkedin} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-blue-500 transition-colors">
-                    <LinkedInIcon />
-                  </a>
-                )}
-                
-                {exp.current && (
-                  <span className="text-[10px] font-bold tracking-widest font-mono text-cyan-400 bg-cyan-400/10 border border-cyan-400/30 rounded px-2 py-0.5">
-                    CURRENT
-                  </span>
-                )}
-              </div>
+          {/* Role + period row */}
+          <div className="flex flex-col gap-2 mb-4 md:mb-6">
+            {/* Top row: role title + period pill */}
+            <div className="flex items-start justify-between gap-3 flex-wrap">
+              <h3 className="text-xl md:text-2xl font-bold text-white font-heading leading-tight">{exp.role}</h3>
+              <span className="text-violet-400 text-xs md:text-sm font-semibold font-mono whitespace-nowrap bg-violet-500/10 px-2.5 py-1 rounded-full border border-violet-500/20 shrink-0">
+                {exp.period}
+              </span>
             </div>
-            
-            <span className="text-violet-400 text-sm font-semibold font-mono whitespace-nowrap bg-violet-500/10 px-3 py-1 rounded-full border border-violet-500/20">
-              {exp.period}
-            </span>
+            {/* Company + links + badge */}
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-cyan-400 font-semibold font-mono text-sm">{exp.company}</span>
+              {exp.website && (
+                <a href={exp.website} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors">
+                  <WebIcon />
+                </a>
+              )}
+              {exp.linkedin && (
+                <a href={exp.linkedin} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-blue-500 transition-colors">
+                  <LinkedInIcon />
+                </a>
+              )}
+              {exp.current && (
+                <span className="text-[10px] font-bold tracking-widest font-mono text-cyan-400 bg-cyan-400/10 border border-cyan-400/30 rounded px-2 py-0.5">
+                  CURRENT
+                </span>
+              )}
+            </div>
           </div>
 
-          <p className="text-slate-300 text-sm leading-relaxed mb-6 font-sans">
+          <p className="text-slate-300 text-sm leading-relaxed mb-4 md:mb-6 font-sans">
             {exp.description}
           </p>
 
-          <ul className="flex flex-col gap-3 mb-6">
+          <ul className="flex flex-col gap-2.5 mb-4 md:mb-6">
             {exp.bullets.map((b, i) => (
-              <li key={i} className="flex gap-3 items-start">
-                <div className="w-5 h-5 rounded-full bg-slate-800/50 border border-slate-700 flex items-center justify-center shrink-0 mt-0.5">
+              <li key={i} className="flex gap-2.5 items-start">
+                <div className="w-4 h-4 md:w-5 md:h-5 rounded-full bg-slate-800/50 border border-slate-700 flex items-center justify-center shrink-0 mt-0.5">
                   <div className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
                 </div>
-                <span className="text-slate-300 text-sm leading-relaxed font-sans">{b}</span>
+                <span className="text-slate-300 text-xs md:text-sm leading-relaxed font-sans">{b}</span>
               </li>
             ))}
           </ul>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1.5 md:gap-2">
             {exp.stack.map((s) => (
-              <span key={s} className="text-xs font-mono text-violet-300 bg-violet-500/10 border border-violet-500/20 rounded px-2.5 py-1">
+              <span key={s} className="text-[11px] md:text-xs font-mono text-violet-300 bg-violet-500/10 border border-violet-500/20 rounded px-2 md:px-2.5 py-1">
                 {s}
               </span>
             ))}
@@ -211,24 +211,25 @@ export default function Experience() {
 
   return (
     <div className="relative w-full" style={{ height: containerHeight }} ref={containerRef}>
-      {/* Sticky container that stays on screen while scrolling through the parent */}
+      {/* Sticky container */}
       <div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center px-4 md:px-8 overflow-hidden">
         
-        <div className="absolute top-20 w-full flex justify-center z-20">
-          <div className="flex items-center gap-3">
-            <div className="text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 rounded-lg p-2">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Section heading */}
+        <div className="absolute top-14 md:top-20 w-full flex justify-center z-20">
+          <div className="flex items-center gap-2 md:gap-3">
+            <div className="text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 rounded-lg p-1.5 md:p-2">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="7" width="20" height="14" rx="2" />
                 <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
               </svg>
             </div>
-            <h2 className="text-white text-3xl md:text-5xl font-extrabold font-heading tracking-tight">
+            <h2 className="text-white text-2xl md:text-5xl font-extrabold font-heading tracking-tight">
               Experience
             </h2>
           </div>
         </div>
 
-        {/* Timeline progress bar */}
+        {/* Timeline progress bar — desktop only */}
         <div className="absolute left-4 md:left-12 top-1/4 bottom-1/4 w-1 bg-slate-800 rounded-full overflow-hidden z-20 hidden md:block">
           <motion.div 
             className="w-full bg-gradient-to-b from-cyan-400 to-violet-500 origin-top"
@@ -236,7 +237,8 @@ export default function Experience() {
           />
         </div>
 
-        <div className="relative w-full max-w-5xl mx-auto h-[600px]">
+        {/* Cards area — adaptive height */}
+        <div className="relative w-full max-w-5xl mx-auto h-[72vh] md:h-[580px] mt-6 md:mt-0">
           {EXPERIENCE.map((exp, i) => (
             <ExperienceCard 
               key={i} 
