@@ -172,7 +172,7 @@ export default function TerminalHero({
         {parts.map((part, pi) => (
           <div
             key={pi}
-            className="text-[#a8c999] leading-relaxed"
+            className="text-[#a8c999] leading-relaxed break-all md:break-words"
             style={{ minHeight: part === "" ? "0.5em" : undefined }}
           >
             {part === "" ? "\u00a0" : part}
@@ -206,8 +206,8 @@ export default function TerminalHero({
       {/* ── Terminal body ── */}
       <div
         ref={bodyRef}
-        className="bg-[#0d1117] px-5 py-4 font-mono text-sm min-h-[300px] max-h-[400px] overflow-y-auto"
-        style={{ lineHeight: "1.7", scrollBehavior: "auto" }}
+        className="bg-[#0d1117] px-4 md:px-5 py-4 font-mono text-xs md:text-sm h-[320px] md:h-[380px] overflow-y-auto overflow-x-hidden break-words whitespace-pre-wrap"
+        style={{ lineHeight: "1.7", scrollBehavior: "auto", wordBreak: "break-word" }}
       >
         {lines.map((line, i) => {
           if (line.type === "empty") return <div key={i} className="h-[0.4em]" />;
@@ -227,7 +227,7 @@ export default function TerminalHero({
           <form onSubmit={handleSubmit} className="flex items-center mt-1">
             <span className="text-[#3ddc84] shrink-0 select-none">{PROMPT_PREFIX}</span>
             <div className="relative flex-1 flex items-center min-w-0">
-              <span className="text-[#79c0ff] whitespace-pre">{inputValue}</span>
+              <span className="text-[#79c0ff] whitespace-pre-wrap break-all md:break-words">{inputValue}</span>
               {!isStreaming && (
                 <span
                   className={`inline-block w-[8px] h-[15px] ml-px align-middle ${isFocused ? "bg-[#79c0ff] animate-pulse" : "bg-[#79c0ff]/30"

@@ -104,7 +104,7 @@ export default function RootLayout({
       lang="en"
       className={`${dmSans.variable} ${syne.variable} ${jetbrainsMono.variable} ${plusJakarta.variable} ${montserrat.variable} ${montserrat_alternates.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col overflow-x-hidden">
         <div className="bg-mesh" />
         {children}
       </body>

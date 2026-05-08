@@ -4,6 +4,9 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import cerebroIcon from "@/app/Utils/isolated_brain.png";
+import iNoteBookIcon from "../public/iNoteBook.svg";
+import newsExpressIcon from "../public/newsExpress.svg";
+import rescueKitchenIcon from "../public/rescueKitchen.svg";
 
 type Project = {
   name: string;
@@ -34,41 +37,46 @@ const PROJECTS: Project[] = [
     previewImage: "/cerebro-preview.png",
   },
   {
-    name: "Orizen Flow",
+    name: "RescueKitchen",
     description:
-      "Automatically analyze resumes, portfolios, and GitHub to identify the strongest candidates.",
+      "A mission-driven surplus food marketplace focused on connecting users to reduce food waste with a 'Dark Luxury' design.",
     longDesc:
-      "Full-stack recruitment platform that scores candidates using AI by parsing their GitHub activity, resume content, and portfolio projects. Built with Hono and Sarvam AI.",
-    stack: ["Hono", "Sarvam AI", "Next.js", "PostgreSQL"],
-    liveUrl: "https://orizenflow.com",
-    githubUrl: "https://github.com/Brijesh-0106/orizen-flow",
+      "Surplus Food Marketplace built with a premium 'Dark Luxury' UI. Features an interactive chatbot for enhanced user interaction and built for fast, responsive performance.",
+    stack: ["Next.js", "React", "Tailwind CSS"],
+    liveUrl: "https://rescue-kitchen.vercel.app",
+    githubUrl: "https://github.com/Brijesh-0106/RescueKitchen",
     featured: true,
-    icon: "OF",
-    iconBg: "rgba(139,92,246,0.1)", // Violet tint
+    icon: rescueKitchenIcon,
+    iconBg: "rgba(16,185,129,0.1)", // Emerald tint
+    previewImage: "/rescueKitchen.png",
   },
   {
-    name: "Orizen TUI",
+    name: "NewsExpress",
     description:
-      "Open-source terminal UI components for Node.js CLI applications.",
+      "A premium news application with a built-in RAG AI Assistant and personalized automated morning digests.",
     longDesc:
-      "A library of beautiful, composable terminal UI components for Node.js. Includes tables, progress bars, spinners, and input prompts — built on React Ink.",
-    stack: ["React Ink", "Node.js", "TypeScript"],
-    githubUrl: "https://github.com/Brijesh-0106/orizen-tui",
+      "RAG-Powered AI News Assistant using Transformers.js & Pinecone. Automated morning digests via Supabase & GitHub Actions. Advanced news filtering in a stunning masonry grid layout.",
+    stack: ["React", "Transformers.js", "Pinecone", "Supabase", "GitHub"],
+    liveUrl: "https://newsaunty.vercel.app/",
+    githubUrl: "https://github.com/Brijesh-0106/NewsExpress",
     featured: true,
-    icon: "OT",
-    iconBg: "rgba(239,68,68,0.1)",
+    icon: newsExpressIcon,
+    iconBg: "rgba(59,130,246,0.1)", // Blue tint
+    previewImage: "/newExpress.png",
   },
   {
-    name: "DataViz Studio",
+    name: "iNoteBook",
     description:
-      "Drag-and-drop dashboard builder with live charts and CSV imports.",
+      "A secure, high-end digital workspace designed for taking and managing notes. Features a custom 'Dark Luxury' glassmorphism aesthetic.",
     longDesc:
-      "Visual data exploration tool. Upload CSVs, build dashboards by dragging chart blocks, and share reports via a public link.",
-    stack: ["D3.js", "FastAPI", "Python", "React"],
-    liveUrl: "https://dataviz.studio",
-    githubUrl: "https://github.com/Brijesh-0106/dataviz",
-    icon: "DV",
-    iconBg: "rgba(168,85,247,0.1)",
+      "Built on the MERN stack, featuring secure authentication, cloud storage, and lightning-fast performance (React 18). Utilizes modern typography and a sleek dark mode for a premium UI/UX.",
+    stack: ["MongoDB", "Express", "React", "Node.js"],
+    liveUrl: "https://i-note-book-io.vercel.app",
+    githubUrl: "https://github.com/Brijesh-0106/iNoteBook",
+    featured: true,
+    icon: iNoteBookIcon,
+    iconBg: "rgba(245,158,11,0.1)", // Amber tint
+    previewImage: "/iNoteBook.png",
   },
 ];
 
