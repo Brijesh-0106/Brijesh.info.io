@@ -5,9 +5,8 @@ import { PORTFOLIO_CONTEXT } from "@/lib/portfolio-context";
 // Force Node.js runtime for Groq SDK compatibility
 export const runtime = "nodejs";
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-
 export async function POST(req: NextRequest) {
+  const groq = new Groq({ apiKey: process.env.GROQ_API_KEY || "fallback" });
   const { question } = await req.json();
 
   if (!question || typeof question !== "string") {
