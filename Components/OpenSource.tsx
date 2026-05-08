@@ -89,7 +89,7 @@ function StatusBadge({ status }: { status: PR["status"] }) {
         borderRadius: 6,
         padding: "3px 10px",
         fontSize: 11,
-        fontFamily: "Space Mono, monospace",
+        fontFamily: "var(--font-jetbrains), monospace",
         fontWeight: 700,
         letterSpacing: "0.05em",
         whiteSpace: "nowrap",
@@ -165,7 +165,7 @@ function RepoRow({ repo }: { repo: Repo }) {
           style={{
             color: "#94a3b8",
             fontSize: 12,
-            fontFamily: "Space Mono, monospace",
+            fontFamily: "var(--font-jetbrains), monospace",
             marginRight: 12,
           }}
         >
@@ -211,10 +211,12 @@ function RepoRow({ repo }: { repo: Repo }) {
               <div className="relative">
                 <Image
                   height={32}
-                  className="rounded-full"
                   width={32}
+                  className="rounded-full"
                   src={profileImg}
                   alt="Profile Image"
+                  sizes="32px"
+                  quality={85}
                 />
                 <span
                   className="absolute"
@@ -232,7 +234,7 @@ function RepoRow({ repo }: { repo: Repo }) {
                     color: "#e2e8f0",
                     fontSize: 13,
                     fontWeight: 500,
-                    fontFamily: "Space Mono, monospace",
+                    fontFamily: "var(--font-jetbrains), monospace",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
@@ -245,7 +247,7 @@ function RepoRow({ repo }: { repo: Repo }) {
                     style={{
                       color: "#475569",
                       fontSize: 11,
-                      fontFamily: "Space Mono, monospace",
+                      fontFamily: "var(--font-jetbrains), monospace",
                       marginTop: 2,
                     }}
                   >
@@ -343,11 +345,10 @@ export default function OpenSource() {
             >
               <GitHubIcon size={22} />
             </div>
-            <h2
+            <h2 className="font-heading"
               style={{
                 color: "#fff",
-                fontFamily: "Syne, sans-serif",
-                fontSize: "clamp(24px, 3vw, 36px)",
+                fontSize: "24px",
                 fontWeight: 800,
                 lineHeight: 1,
               }}
@@ -359,7 +360,7 @@ export default function OpenSource() {
             style={{
               color: "#475569",
               fontSize: 13,
-              fontFamily: "Space Mono, monospace",
+              fontFamily: "var(--font-jetbrains), monospace",
             }}
           >
             Building and giving back to the community.
@@ -372,9 +373,9 @@ export default function OpenSource() {
             <p
               style={{
                 color: "#fff",
-                fontSize: 28,
+                fontSize: 22,
                 fontWeight: 700,
-                fontFamily: "Space Mono, monospace",
+                fontFamily: "var(--font-jetbrains), monospace",
                 lineHeight: 1,
               }}
             >
@@ -384,7 +385,7 @@ export default function OpenSource() {
               style={{
                 color: "#475569",
                 fontSize: 10,
-                fontFamily: "Space Mono, monospace",
+                fontFamily: "var(--font-jetbrains), monospace",
                 marginTop: 4,
                 letterSpacing: "0.12em",
               }}
@@ -396,9 +397,9 @@ export default function OpenSource() {
             <p
               style={{
                 color: "#a78bfa",
-                fontSize: 28,
+                fontSize: 22,
                 fontWeight: 700,
-                fontFamily: "Space Mono, monospace",
+                fontFamily: "var(--font-jetbrains), monospace",
                 lineHeight: 1,
               }}
             >
@@ -425,6 +426,6 @@ export default function OpenSource() {
           <RepoRow key={repo.name} repo={repo} />
         ))}
       </div>
-    </div>
+    </div >
   );
 }

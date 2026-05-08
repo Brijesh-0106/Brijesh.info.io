@@ -25,7 +25,7 @@ function LocationCard() {
   }, []);
 
   return (
-    <div className="w-full h-full bg-[#09090b] border border-white/5 rounded-2xl p-8 flex flex-col justify-center items-center shadow-2xl relative overflow-hidden transition-all duration-500 hover:border-white/10 group">
+    <div className="w-full h-full bg-[#0f0f17] border border-white/[0.07] rounded-2xl p-8 flex flex-col justify-center items-center shadow-xl relative overflow-hidden transition-all duration-500 hover:border-white/[0.1] group">
       <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       
       {/* Map Pin Icon */}
@@ -36,11 +36,11 @@ function LocationCard() {
         </svg>
       </div>
 
-      <h3 className="text-2xl font-bold font-sans text-white mb-2">Ahmedabad, India</h3>
+      <h3 className="text-lg font-bold font-heading text-[#f1f0f5] mb-2">Ahmedabad, India</h3>
       
       {/* Clock */}
-      <div className="flex items-center gap-2 text-slate-400 font-mono text-sm bg-white/5 px-4 py-2 rounded-full border border-white/5 mt-4">
-        <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+        <div className="flex items-center gap-2 text-[#7a7a8c] font-mono text-sm bg-white/[0.03] px-4 py-2 rounded-full border border-white/[0.06] mt-4">
+          <div className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
         {time || "Loading time..."} (IST)
       </div>
     </div>
@@ -62,10 +62,10 @@ export default function Contact() {
   return (
     <div className="w-full max-w-5xl mx-auto mt-16 md:mt-32 mb-8 md:mb-16 px-4 md:px-8">
       <div className="flex flex-col items-center text-center mb-8 md:mb-16">
-        <h2 className="text-3xl md:text-5xl font-extrabold font-heading text-white tracking-tight mb-4">
-          Let's Connect
+        <h2 className="text-2xl font-bold font-heading text-[#f1f0f5] tracking-tight mb-3">
+          Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Connect</span>
         </h2>
-        <p className="text-slate-400 font-sans max-w-lg mx-auto">
+        <p className="text-[#7a7a8c] font-[family-name:var(--font-jakarta)] text-xs max-w-sm mx-auto">
           Send a quick message or check out my local time.
         </p>
       </div>
@@ -84,7 +84,7 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             onSubmit={handleSubmit}
-            className="w-full h-full bg-[#09090b] border border-white/5 rounded-2xl p-6 md:p-8 flex flex-col justify-between shadow-2xl relative overflow-hidden transition-all duration-500 hover:border-white/10"
+            className="w-full h-full bg-[#0f0f17] border border-white/[0.07] rounded-2xl p-6 md:p-8 flex flex-col justify-between shadow-xl relative overflow-hidden transition-all duration-500 hover:border-white/[0.1]"
           >
             <div className="flex flex-col gap-4 mb-6 flex-grow">
               <input 
@@ -92,28 +92,28 @@ export default function Contact() {
                 id="name"
                 type="text" 
                 placeholder="Name"
-                className="w-full bg-[#050505] border border-white/5 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-white/20 transition-all font-sans text-sm shadow-inner"
+                className="w-full bg-[#0a0a12] border border-white/[0.06] rounded-xl px-4 py-3 text-[#f1f0f5] placeholder:text-[#45454f] focus:outline-none focus:ring-1 focus:ring-indigo-400/30 transition-all font-sans text-sm"
               />
               <input 
                 required
                 id="email"
                 type="email" 
                 placeholder="Email Address"
-                className="w-full bg-[#050505] border border-white/5 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-white/20 transition-all font-sans text-sm shadow-inner"
+                className="w-full bg-[#0a0a12] border border-white/[0.06] rounded-xl px-4 py-3 text-[#f1f0f5] placeholder:text-[#45454f] focus:outline-none focus:ring-1 focus:ring-indigo-400/30 transition-all font-sans text-sm"
               />
               <textarea 
                 required
                 id="message"
                 rows={3}
                 placeholder="Your message..."
-                className="w-full bg-[#050505] border border-white/5 rounded-xl px-4 py-3 text-white placeholder:text-slate-500 focus:outline-none focus:ring-1 focus:ring-white/20 transition-all font-sans resize-none text-sm flex-grow shadow-inner"
+                className="w-full bg-[#0a0a12] border border-white/[0.06] rounded-xl px-4 py-3 text-[#f1f0f5] placeholder:text-[#45454f] focus:outline-none focus:ring-1 focus:ring-indigo-400/30 transition-all font-sans resize-none text-sm flex-grow"
               />
             </div>
 
             <button 
               type="submit"
               disabled={status !== "idle"}
-              className="w-full bg-white text-black font-bold font-sans rounded-xl py-3 transition-all hover:scale-[1.02] hover:bg-white/90 active:scale-95 disabled:opacity-70 flex justify-center items-center gap-2 text-sm"
+              className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold font-sans rounded-xl py-3 transition-all hover:opacity-90 hover:scale-[1.01] active:scale-95 disabled:opacity-50 flex justify-center items-center gap-2 text-sm tracking-wide"
             >
               {status === "idle" && (
                 <>

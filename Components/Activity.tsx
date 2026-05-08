@@ -43,10 +43,10 @@ function Stat({
 }) {
   return (
     <div className="text-right">
-      <p className={`${colorClass} text-2xl font-bold font-mono leading-none`}>
+      <p className={`${colorClass} text-xl font-bold font-mono leading-none`}>
         {value}
       </p>
-      <p className="text-slate-400 text-[10px] font-sans font-medium mt-1 tracking-widest whitespace-nowrap uppercase">
+      <p className="text-slate-400 text-[10px] font-mono font-medium mt-1 tracking-widest whitespace-nowrap uppercase">
         {label}
       </p>
     </div>
@@ -96,7 +96,7 @@ export default function Activity() {
             <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 Z" />
           </svg>
         </div>
-        <h2 className="text-white font-heading text-[clamp(24px,3vw,36px)] font-extrabold tracking-tight">
+        <h2 className="text-white font-heading text-2xl font-bold tracking-tight">
           Code Activity
         </h2>
       </div>
@@ -147,8 +147,8 @@ export default function Activity() {
             showColorLegend={true}
             colorScheme="dark"
             style={{
-              color: "#94a3b8", // slate-400 equivalent for the inline calendar text
-              fontFamily: "var(--font-fira-code), monospace",
+              color: "#94a3b8",
+              fontFamily: "var(--font-jetbrains), monospace",
               fontSize: "12px",
             }}
           />

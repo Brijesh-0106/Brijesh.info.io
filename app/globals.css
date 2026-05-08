@@ -3,51 +3,83 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-fira-code);
-  --font-heading: var(--font-outfit);
-  --color-accent-cyan: #22d3ee;
-  --color-accent-violet: #8b5cf6;
-  --color-glass: rgba(255, 255, 255, 0.02);
-  --color-glass-border: rgba(255, 255, 255, 0.05);
+  --font-sans: var(--font-dm-sans);
+  --font-mono: var(--font-jetbrains);
+  --font-heading: var(--font-syne);
+  --font-desc: var(--font-jakarta);  /* Plus Jakarta Sans – section sub-copy */
+  /* Accent palette */
+  --color-accent-indigo: #818cf8;
+  --color-accent-purple: #a78bfa;
+  --color-accent-cyan: #22d3ee;   /* kept for terminal only */
+  /* Surfaces */
+  --color-glass: rgba(255, 255, 255, 0.03);
+  --color-glass-border: rgba(255, 255, 255, 0.07);
+  --color-surface: #0f0f17;
 }
 
 :root {
-  --background: #020617; /* Slate 950 / Midnight Black */
-  --foreground: #f8fafc;
+  --background: #08080c;
+  --foreground: #f1f0f5;
+  /* Semantic text tokens */
+  --text-primary: #f1f0f5;
+  --text-secondary: #7a7a8c;
+  --text-muted: #45454f;
+}
+
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.65;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
+  letter-spacing: -0.025em;
+  line-height: 1.2;
 }
 
-/* Background Glowing Orbs */
+/* ─── Type scale ────────────────────────────────────────────────────────────── */
+/* h1 (hero name):       text-4xl  = 2.25rem   / 36px  */
+/* h2 (section title):  text-2xl  = 1.5rem    / 24px  */
+/* h3 (card title):     text-lg   = 1.125rem  / 18px  */
+/* body:                text-sm   = 0.875rem  / 14px  (default) */
+/* label/meta:          text-xs   = 0.75rem   / 12px  */
+/* micro/mono:          text-[11px]            / 11px  */
+
+code, kbd, pre, .font-mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem; /* 13px */
+}
+
+/* ─── Background mesh ──────────────────────────────────────────────────────── */
 .bg-mesh {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: -1;
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(34, 211, 238, 0.1) 0px, transparent 50%);
+  background-image:
+    radial-gradient(at 15% 10%, rgba(129, 140, 248, 0.12) 0px, transparent 55%),
+    radial-gradient(at 85% 5%,  rgba(167, 139, 250, 0.08) 0px, transparent 50%),
+    radial-gradient(at 50% 100%, rgba(129, 140, 248, 0.05) 0px, transparent 60%);
   pointer-events: none;
-  animation: breathe 10s ease-in-out infinite alternate;
+  animation: breathe 12s ease-in-out infinite alternate;
 }
 
 @keyframes breathe {
-  0% { transform: scale(1); opacity: 0.8; }
-  100% { transform: scale(1.05); opacity: 1; }
+  0%   { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 1;   transform: scale(1.04); }
 }
 
-/* Scrollbar hiding utility */
+/* ─── Scrollbar hide ───────────────────────────────────────────────────────── */
 .no-scrollbar,
 .no-scrollbar * {
   -ms-overflow-style: none !important;
@@ -58,15 +90,17 @@ h1, h2, h3, h4, h5, h6 {
   display: none !important;
 }
 
+/* ─── Shimmer text ─────────────────────────────────────────────────────────── */
 .text-shimmer {
-  background: linear-gradient(90deg, #fff, #8b5cf6, #22d3ee, #fff);
+  background: linear-gradient(90deg, #f1f0f5, #818cf8, #a78bfa, #f1f0f5);
   background-size: 200%;
   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
-  animation: shimmer 3s infinite;
+  animation: shimmer 3.5s infinite linear;
 }
 
 @keyframes shimmer {
-  0% { background-position: 0% }
+  0%   { background-position: 0% }
   100% { background-position: 200% }
 }
