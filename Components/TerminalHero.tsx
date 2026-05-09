@@ -24,7 +24,6 @@ const DEMO_REPLY = [
   "I build high-end, full-stack web apps with modern UI/UX and AI integrations.",
   "",
   "The terminal is live. Ask my AI assistant anything about my work or experience.",
-  "──────────────────────────────────────────────────────────"
 ];
 
 function sleep(ms: number) {
@@ -99,6 +98,11 @@ export default function TerminalHero({
           return copy;
         });
         setLines((prev) => [...prev, { type: "empty" }]);
+        
+        // Auto-focus after generation
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 50);
       } catch {
         setLines((prev) => {
           const copy = [...prev];
@@ -219,7 +223,7 @@ export default function TerminalHero({
         style={{ lineHeight: "1.7", scrollBehavior: "auto" }}
       >
         {lines.map((line, i) => {
-          if (line.type === "empty") return <div key={i} className="h-[0.4em]" />;
+          if (line.type === "empty") return <div key={i} className="h-4" />;
           if (line.type === "input") {
             return (
               <div key={i} className="flex flex-wrap">
@@ -233,7 +237,7 @@ export default function TerminalHero({
 
         {/* ── Active input row ── */}
         {demoComplete && (
-          <form onSubmit={handleSubmit} className="flex items-center mt-1">
+          <form onSubmit={handleSubmit} className="flex items-center mt-2 w-full">
             <span className="text-[#3ddc84] shrink-0 select-none">{PROMPT_PREFIX}</span>
             <div className="relative flex-1 flex items-center min-w-0">
               <span className="text-[#79c0ff] whitespace-pre">{inputValue}</span>

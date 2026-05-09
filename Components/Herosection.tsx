@@ -29,7 +29,7 @@ export default function Herosection() {
       {/* Subtle top glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-indigo-500/[0.06] rounded-full blur-[180px] pointer-events-none" />
 
-      <div className="w-full max-w-7xl px-4 md:px-8 flex flex-col relative z-10">
+      <div className="w-full max-w-5xl px-4 md:px-8 flex flex-col relative z-10">
         <div className="h-20" />
         <Navbar />
 
@@ -37,7 +37,7 @@ export default function Herosection() {
         <div className="flex-1 flex flex-col lg:flex-row gap-12 lg:gap-16 items-center lg:items-start justify-center py-12 lg:py-16">
 
           {/* ── Left: identity ── */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left shrink-0 lg:w-[450px]">
+          <div className="flex flex-col items-center lg:items-start text-center lg:text-left shrink-0 lg:w-[370px]">
 
             {/* Avatar & Name Row */}
             <div className="flex flex-col lg:flex-row items-center gap-6 mb-8">
@@ -58,7 +58,7 @@ export default function Herosection() {
 
               {/* Name & Title */}
               <div className="flex flex-col items-center lg:items-start mt-4 lg:mt-0">
-                <h1 className="font-heading text-xl md:text-[40px] font-bold tracking-tight mb-3 leading-none text-white">
+                <h1 className="font-heading text-xl md:text-[30px] font-bold tracking-tight mb-3 leading-none text-white">
                   Shah{" "}
                   <span className="text-[#a87ffb]">
                     Brijesh

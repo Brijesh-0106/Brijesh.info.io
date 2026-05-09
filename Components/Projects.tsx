@@ -34,6 +34,20 @@ const PROJECTS: Project[] = [
     previewImage: "/cerebro-preview.png",
   },
   {
+    name: "NewsExpress",
+    description:
+      "AI-driven RAG news assistant with automated email digests and a Dark Luxury UI.",
+    longDesc:
+      "Platform for regional news filtering using NewsData.io API, featuring persistent search, seamless user experience, and server-side automation for daily email subscriptions via Supabase and GitHub Actions.",
+    stack: ["React", "Supabase", "Groq", "GitHub Actions", "RAG"],
+    githubUrl: "https://github.com/Brijesh-0106/NewsExpress",
+    liveUrl: "https://newsaunty.vercel.app/",
+    featured: true,
+    icon: "/newsExpress.svg",
+    iconBg: "rgba(239,68,68,0.1)", // Red tint
+    previewImage: "/newExpress.png",
+  },
+  {
     name: "RescueKitchen",
     description:
       "A mission-driven surplus food marketplace connecting users to reduce food waste with a 'Dark Luxury' design.",
@@ -60,19 +74,6 @@ const PROJECTS: Project[] = [
     icon: "/iNotebook.svg",
     iconBg: "rgba(168,85,247,0.1)", // Purple tint
     previewImage: "/iNoteBook.png",
-  },
-  {
-    name: "NewsExpress",
-    description:
-      "AI-driven RAG news assistant with automated email digests and a Dark Luxury UI.",
-    longDesc:
-      "Platform for regional news filtering using NewsData.io API, featuring persistent search, seamless user experience, and server-side automation for daily email subscriptions via Supabase and GitHub Actions.",
-    stack: ["React", "Supabase", "NewsData API", "GitHub Actions"],
-    githubUrl: "https://github.com/Brijesh-0106/NewsExpress",
-    featured: true,
-    icon: "/newsExpress.svg",
-    iconBg: "rgba(239,68,68,0.1)", // Red tint
-    previewImage: "/newExpress.png",
   },
 ];
 
@@ -216,9 +217,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
       {/* Description */}
       <p
-        className={`text-[#7a7a8c] text-xs leading-relaxed font-sans mb-5 flex-1 transition-all duration-300 relative z-10 ${hovered ? "line-clamp-none opacity-100" : "line-clamp-3 opacity-90"}`}
+        className={`text-[#7a7a8c] text-xs leading-relaxed font-sans mb-5 flex-1 transition-all duration-300 relative z-10 opacity-90`}
       >
-        {hovered ? project.longDesc : project.description}
+        {project.longDesc}
       </p>
 
       {/* Stack tags */}

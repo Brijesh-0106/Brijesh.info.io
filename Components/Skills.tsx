@@ -1,44 +1,45 @@
 "use client";
 
-import { motion } from "framer-motion";
-
 const SKILLS = [
   "React", "Next.js", "TypeScript", "Node.js", "Express", "PostgreSQL",
-  "MongoDB", "Prisma", "Tailwind", "Docker", "Java", "Springboot",
-  "Python"
+  "MongoDB", "Prisma", "Tailwind CSS", "Docker", "Java", "Spring Boot",
+  "Python", "AWS", "Git", "REST APIs"
 ];
 
 export default function Skills() {
   return (
-    <div className="w-full overflow-hidden py-10 mt-10 relative">
-      {/* Fade edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#08080c] to-transparent z-10" />
-      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#08080c] to-transparent z-10" />
+    <div className="w-full max-w-5xl mx-auto px-4 md:px-8 py-16 mt-10">
+      <div className="flex items-center gap-3 mb-8">
+        <div className="text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg p-2 flex">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1 3-6z" />
+          </svg>
+        </div>
+        <h2 className="text-[#f1f0f5] font-heading text-2xl font-bold tracking-tight">
+          Technical Skills
+        </h2>
+      </div>
 
-      <div className="flex w-fit">
-        <motion.div
-          animate={{ x: [0, -1035] }}
-          transition={{
-            x: {
-              repeat: Infinity,
-              repeatType: "loop",
-              duration: 20,
-              ease: "linear",
-            },
-          }}
-          className="flex gap-4 pr-4"
-        >
-          {[...SKILLS, ...SKILLS, ...SKILLS].map((skill, i) => (
-            <div
-              key={i}
-              className="flex items-center justify-center whitespace-nowrap bg-[#0f0f17] backdrop-blur-md border border-white/[0.07] rounded-full px-6 py-3 hover:border-indigo-400/30 hover:bg-indigo-500/[0.06] transition-all cursor-default"
-            >
-              <span className="text-[#7a7a8c] font-mono text-sm tracking-wide">
-                {skill}
-              </span>
-            </div>
-          ))}
-        </motion.div>
+      <div className="flex flex-wrap gap-3">
+        {SKILLS.map((skill, i) => (
+          <div
+            key={i}
+            className="flex items-center justify-center whitespace-nowrap bg-[#0f0f17] border border-white/[0.07] rounded-lg px-5 py-2.5 hover:border-indigo-400/30 hover:bg-indigo-500/[0.06] transition-all cursor-default shadow-sm hover:-translate-y-0.5"
+          >
+            <span className="text-[#a8a8b8] font-mono text-sm tracking-wide">
+              {skill}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );
