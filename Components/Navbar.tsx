@@ -43,15 +43,15 @@ const SOCIAL_LINKS = [
 export default function Navbar() {
   return (
     <nav className="text-white absolute top-5 left-1/2 -translate-x-1/2 z-50 w-full max-w-6xl px-4 flex justify-center">
-      <div className="relative p-[1px] rounded-full bg-gradient-to-r from-white/[0.08] via-white/[0.04] to-white/[0.08]">
-        <div className="bg-[#0d0d12]/90 backdrop-blur-2xl rounded-full px-6 py-2.5 flex items-center gap-8">
+            <div className="relative p-[1px] rounded-full bg-gradient-to-r from-indigo-500/40 via-purple-500/20 to-indigo-500/40 shadow-[0_0_40px_rgba(99,102,241,0.15)]">
+        <div className="bg-[#0a0a0f]/80 backdrop-blur-xl rounded-full px-8 py-3.5 flex items-center gap-8 border border-white/5">
           {/* Nav links */}
-          <div className="hidden md:flex gap-7 items-center">
+          <div className="hidden md:flex gap-8 items-center">
             {NAV_LINKS.map((item) => (
               <Link
                 key={item.path}
                 href={item.path}
-                className="text-[13px] font-medium text-[#7a7a8c] hover:text-[#f1f0f5] transition-colors duration-200 tracking-wide"
+                className="text-[14px] font-medium text-slate-400 hover:text-white transition-colors duration-300 tracking-wide hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
               >
                 {item.name}
               </Link>
@@ -59,7 +59,7 @@ export default function Navbar() {
           </div>
 
           {/* Divider */}
-          <div className="hidden md:block w-px h-4 bg-white/[0.08]" />
+          <div className="hidden md:block w-px h-5 bg-white/10" />
 
           {/* Social icons */}
           <div className="flex items-center gap-4">

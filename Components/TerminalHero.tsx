@@ -14,12 +14,17 @@ interface TerminalHeroProps {
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
-const DEMO_QUESTION = "Who are you and what do you do?";
+const DEMO_QUESTION = "what is this?";
 const PROMPT_PREFIX = "visitor@brijesh.dev:~$ ";
-const BOOT_LINES = [
-  "Initializing brijesh.portfolio ...",
-  "AI context loaded. Ask me anything about Brijesh.",
+const DEMO_REPLY = [
+  "[system]: Initializing interactive portfolio...",
+  "[system]: AI context injected successfully.",
   "",
+  "Welcome! I'm Brijesh, a Software Engineer based in India.",
+  "I build high-end, full-stack web apps with modern UI/UX and AI integrations.",
+  "",
+  "The terminal is live. Ask my AI assistant anything about my work or experience.",
+  "──────────────────────────────────────────────────────────"
 ];
 
 function sleep(ms: number) {
@@ -121,13 +126,6 @@ export default function TerminalHero({
     hasRunDemo.current = true;
 
     async function runDemo() {
-      for (const line of BOOT_LINES) {
-        await sleep(200);
-        setLines((prev) => [
-          ...prev,
-          line === "" ? { type: "empty" } : { type: "output", text: line },
-        ]);
-      }
       await sleep(500);
       for (let i = 1; i <= DEMO_QUESTION.length; i++) {
         setInputValue(DEMO_QUESTION.slice(0, i));
@@ -135,7 +133,18 @@ export default function TerminalHero({
       }
       await sleep(300);
       setInputValue("");
-      await askQuestion(DEMO_QUESTION);
+
+      setLines([{ type: "input", text: DEMO_QUESTION }]);
+
+      for (const line of DEMO_REPLY) {
+        await sleep(200);
+        setLines((prev) => [
+          ...prev,
+          { type: "output", text: line, streaming: false },
+        ]);
+      }
+      setLines((prev) => [...prev, { type: "empty" }]);
+
       setDemoComplete(true);
     }
 

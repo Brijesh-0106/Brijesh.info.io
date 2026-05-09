@@ -34,41 +34,45 @@ const PROJECTS: Project[] = [
     previewImage: "/cerebro-preview.png",
   },
   {
-    name: "Orizen Flow",
+    name: "RescueKitchen",
     description:
-      "Automatically analyze resumes, portfolios, and GitHub to identify the strongest candidates.",
+      "A mission-driven surplus food marketplace connecting users to reduce food waste with a 'Dark Luxury' design.",
     longDesc:
-      "Full-stack recruitment platform that scores candidates using AI by parsing their GitHub activity, resume content, and portfolio projects. Built with Hono and Sarvam AI.",
-    stack: ["Hono", "Sarvam AI", "Next.js", "PostgreSQL"],
-    liveUrl: "https://orizenflow.com",
-    githubUrl: "https://github.com/Brijesh-0106/orizen-flow",
+      "Surplus Food Marketplace built with a premium 'Dark Luxury' UI. Features an interactive chatbot for enhanced user interaction and built for fast, responsive performance.",
+    stack: ["Next.js", "React", "Tailwind CSS"],
+    liveUrl: "https://rescue-kitchen.vercel.app",
+    githubUrl: "https://github.com/Brijesh-0106/RescueKitchen",
     featured: true,
-    icon: "OF",
-    iconBg: "rgba(139,92,246,0.1)", // Violet tint
+    icon: "/rescueKitchen.svg",
+    iconBg: "rgba(34,197,94,0.1)", // Green tint
+    previewImage: "/rescueKitchen.png",
   },
   {
-    name: "Orizen TUI",
+    name: "iNoteBook",
     description:
-      "Open-source terminal UI components for Node.js CLI applications.",
+      "A secure, high-end digital workspace designed for taking and managing notes.",
     longDesc:
-      "A library of beautiful, composable terminal UI components for Node.js. Includes tables, progress bars, spinners, and input prompts — built on React Ink.",
-    stack: ["React Ink", "Node.js", "TypeScript"],
-    githubUrl: "https://github.com/Brijesh-0106/orizen-tui",
+      "Built on the MERN stack with secure login/signup. Cloud-based storage allows access from anywhere. Lightning-fast experience across devices with modern typography and sleek 'Dark Luxury' glassmorphism design.",
+    stack: ["MongoDB", "Express", "React", "Node.js"],
+    liveUrl: "https://i-note-book-io.vercel.app",
+    githubUrl: "https://github.com/Brijesh-0106/iNoteBook",
     featured: true,
-    icon: "OT",
-    iconBg: "rgba(239,68,68,0.1)",
+    icon: "/iNotebook.svg",
+    iconBg: "rgba(168,85,247,0.1)", // Purple tint
+    previewImage: "/iNoteBook.png",
   },
   {
-    name: "DataViz Studio",
+    name: "NewsExpress",
     description:
-      "Drag-and-drop dashboard builder with live charts and CSV imports.",
+      "AI-driven RAG news assistant with automated email digests and a Dark Luxury UI.",
     longDesc:
-      "Visual data exploration tool. Upload CSVs, build dashboards by dragging chart blocks, and share reports via a public link.",
-    stack: ["D3.js", "FastAPI", "Python", "React"],
-    liveUrl: "https://dataviz.studio",
-    githubUrl: "https://github.com/Brijesh-0106/dataviz",
-    icon: "DV",
-    iconBg: "rgba(168,85,247,0.1)",
+      "Platform for regional news filtering using NewsData.io API, featuring persistent search, seamless user experience, and server-side automation for daily email subscriptions via Supabase and GitHub Actions.",
+    stack: ["React", "Supabase", "NewsData API", "GitHub Actions"],
+    githubUrl: "https://github.com/Brijesh-0106/NewsExpress",
+    featured: true,
+    icon: "/newsExpress.svg",
+    iconBg: "rgba(239,68,68,0.1)", // Red tint
+    previewImage: "/newExpress.png",
   },
 ];
 
@@ -150,7 +154,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               ) : (
                 <>
                   <div className="text-xl md:text-3xl font-heading font-black text-slate-800 opacity-20 absolute">
-                    {typeof project.icon === "string" ? project.icon : project.name.slice(0, 2)}
+                    {typeof project.icon === "string" && !project.icon.startsWith("/") ? project.icon : project.name.slice(0, 2)}
                   </div>
                 </>
               )}
@@ -166,11 +170,15 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       <div className="flex items-start justify-between mb-4 relative z-10">
         {/* Icon */}
         <div
-          className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-xs font-bold font-mono text-white tracking-widest shadow-inner"
+          className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-xs font-bold font-mono text-white tracking-widest shadow-inner relative overflow-hidden"
           style={{ background: project.iconBg }}
         >
           {typeof project.icon === "string" ? (
-            project.icon
+            project.icon.startsWith("/") ? (
+              <Image src={project.icon} alt={project.name} fill className="p-2 object-contain" />
+            ) : (
+              project.icon
+            )
           ) : (
             <Image src={project.icon} alt={project.name} width={24} height={24} className="rounded-sm" />
           )}
