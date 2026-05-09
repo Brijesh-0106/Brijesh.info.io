@@ -2,6 +2,11 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import cerebroIcon from "@/app/Utils/isolated_brain.png";
+import iNoteBookIcon from "../public/iNoteBook.svg";
+import newsExpressIcon from "../public/newsExpress.svg";
+import rescueKitchenIcon from "../public/rescueKitchen.svg";
 
 type Project = {
   name: string;
@@ -11,60 +16,67 @@ type Project = {
   liveUrl?: string;
   githubUrl?: string;
   featured?: boolean;
-  icon: string; // emoji or letter
+  icon: string | any; // emoji, letter or image
   iconBg: string;
+  previewImage?: any;
 };
 
 const PROJECTS: Project[] = [
   {
-    name: "Review Scope",
+    name: "Cerebro",
     description:
-      "Automated code reviews that go beyond the diff. Catch bugs and enforce standards with AI.",
+      "Your AI-powered second brain. Save content from anywhere, search by meaning, and chat with your knowledge base.",
     longDesc:
-      "AI-powered code review tool that integrates with GitHub webhooks, uses Gemini API to analyze diffs, and posts structured review comments automatically on every PR.",
-    stack: ["Hono", "Webhook", "Gemini API", "Open AI"],
-    liveUrl: "https://reviewscope.app",
-    githubUrl: "https://github.com/Brijesh-0106/review-scope",
+      "Full-stack RAG application that saves content from YouTube, Twitter, articles, and notes. Uses vector embeddings for semantic search and LLM chat to retrieve information from YOUR saved content with source citations.",
+    stack: ["React", "Node.js", "MongoDB", "Pinecone", "Groq", "RAG"],
+    liveUrl: "https://cerebro-secondbrain.vercel.app/",
+    githubUrl: "https://github.com/Brijesh-0106/cerebro",
     featured: true,
-    icon: "RS",
-    iconBg: "rgba(34,211,238,0.1)", // Cyan tint
+    icon: cerebroIcon,
+    iconBg: "rgba(79,57,246,0.1)", // Indigo tint (#4f39f6)
+    previewImage: "/cerebro-preview.png",
   },
   {
-    name: "Orizen Flow",
+    name: "RescueKitchen",
     description:
-      "Automatically analyze resumes, portfolios, and GitHub to identify the strongest candidates.",
+      "A mission-driven surplus food marketplace focused on connecting users to reduce food waste with a 'Dark Luxury' design.",
     longDesc:
-      "Full-stack recruitment platform that scores candidates using AI by parsing their GitHub activity, resume content, and portfolio projects. Built with Hono and Sarvam AI.",
-    stack: ["Hono", "Sarvam AI", "Next.js", "PostgreSQL"],
-    liveUrl: "https://orizenflow.com",
-    githubUrl: "https://github.com/Brijesh-0106/orizen-flow",
+      "Surplus Food Marketplace built with a premium 'Dark Luxury' UI. Features an interactive chatbot for enhanced user interaction and built for fast, responsive performance.",
+    stack: ["Next.js", "React", "Tailwind CSS"],
+    liveUrl: "https://rescue-kitchen.vercel.app",
+    githubUrl: "https://github.com/Brijesh-0106/RescueKitchen",
     featured: true,
-    icon: "OF",
-    iconBg: "rgba(139,92,246,0.1)", // Violet tint
+    icon: rescueKitchenIcon,
+    iconBg: "rgba(16,185,129,0.1)", // Emerald tint
+    previewImage: "/rescueKitchen.png",
   },
   {
-    name: "Orizen TUI",
+    name: "NewsExpress",
     description:
-      "Open-source terminal UI components for Node.js CLI applications.",
+      "A premium news application with a built-in RAG AI Assistant and personalized automated morning digests.",
     longDesc:
-      "A library of beautiful, composable terminal UI components for Node.js. Includes tables, progress bars, spinners, and input prompts — built on React Ink.",
-    stack: ["React Ink", "Node.js", "TypeScript"],
-    githubUrl: "https://github.com/Brijesh-0106/orizen-tui",
+      "RAG-Powered AI News Assistant using Transformers.js & Pinecone. Automated morning digests via Supabase & GitHub Actions. Advanced news filtering in a stunning masonry grid layout.",
+    stack: ["React", "Transformers.js", "Pinecone", "Supabase", "GitHub"],
+    liveUrl: "https://newsaunty.vercel.app/",
+    githubUrl: "https://github.com/Brijesh-0106/NewsExpress",
     featured: true,
-    icon: "OT",
-    iconBg: "rgba(239,68,68,0.1)",
+    icon: newsExpressIcon,
+    iconBg: "rgba(59,130,246,0.1)", // Blue tint
+    previewImage: "/newExpress.png",
   },
   {
-    name: "DataViz Studio",
+    name: "iNoteBook",
     description:
-      "Drag-and-drop dashboard builder with live charts and CSV imports.",
+      "A secure, high-end digital workspace designed for taking and managing notes. Features a custom 'Dark Luxury' glassmorphism aesthetic.",
     longDesc:
-      "Visual data exploration tool. Upload CSVs, build dashboards by dragging chart blocks, and share reports via a public link.",
-    stack: ["D3.js", "FastAPI", "Python", "React"],
-    liveUrl: "https://dataviz.studio",
-    githubUrl: "https://github.com/Brijesh-0106/dataviz",
-    icon: "DV",
-    iconBg: "rgba(168,85,247,0.1)",
+      "Built on the MERN stack, featuring secure authentication, cloud storage, and lightning-fast performance (React 18). Utilizes modern typography and a sleek dark mode for a premium UI/UX.",
+    stack: ["MongoDB", "Express", "React", "Node.js"],
+    liveUrl: "https://i-note-book-io.vercel.app",
+    githubUrl: "https://github.com/Brijesh-0106/iNoteBook",
+    featured: true,
+    icon: iNoteBookIcon,
+    iconBg: "rgba(245,158,11,0.1)", // Amber tint
+    previewImage: "/iNoteBook.png",
   },
 ];
 
@@ -106,12 +118,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`relative flex flex-col p-6 rounded-2xl transition-all duration-300 border bg-gradient-to-b from-[#0a0a0a] to-[#050505] overflow-hidden ${hovered ? "border-cyan-500/30 shadow-[0_0_30px_rgba(34,211,238,0.1)] -translate-y-1" : "border-white/5"}`}
+      className={`relative flex flex-col p-6 rounded-2xl transition-all duration-300 border bg-gradient-to-b from-[#0f0f17] to-[#0a0a10] overflow-hidden ${hovered ? "border-indigo-400/25 shadow-[0_0_30px_rgba(129,140,248,0.08)] -translate-y-1" : "border-white/[0.06]"}`}
       style={{ cursor: "default", perspective: "1000px" }}
     >
       {/* Top accent line on hover */}
       <div
-        className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-400 to-violet-500 origin-left transition-transform duration-300 ease-out"
+        className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-indigo-400 to-purple-500 origin-left transition-transform duration-300 ease-out"
         style={{ transform: hovered ? "scaleX(1)" : "scaleX(0)" }}
       />
 
@@ -133,9 +145,24 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-400" />
             </div>
             {/* Inner Content */}
-            <div className="flex-1 bg-slate-50 relative p-3 flex flex-col items-center justify-center">
-              <div className="text-xl md:text-3xl font-heading font-black text-slate-800 opacity-20 absolute">{project.icon}</div>
-              <div className="mt-auto font-heading font-bold text-[8px] md:text-xs text-slate-800 z-10 bg-white/80 px-2 py-1 rounded shadow-sm backdrop-blur-sm">
+            <div className="flex-1 bg-[#0a0a0f] relative overflow-hidden flex flex-col items-center justify-center">
+              {project.previewImage ? (
+                <Image
+                  src={project.previewImage}
+                  alt={project.name}
+                  fill
+                  sizes="(max-width: 768px) 160px, 224px"
+                  className="object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                  priority={index === 0}
+                />
+              ) : (
+                <>
+                  <div className="text-xl md:text-3xl font-heading font-black text-slate-800 opacity-20 absolute">
+                    {typeof project.icon === "string" ? project.icon : project.name.slice(0, 2)}
+                  </div>
+                </>
+              )}
+              <div className="mt-auto mb-2 font-heading font-bold text-[8px] md:text-xs text-slate-800 z-10 bg-white/80 px-2 py-1 rounded shadow-sm backdrop-blur-sm">
                 {project.name}
               </div>
             </div>
@@ -150,7 +177,11 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-xs font-bold font-mono text-white tracking-widest shadow-inner"
           style={{ background: project.iconBg }}
         >
-          {project.icon}
+          {typeof project.icon === "string" ? (
+            project.icon
+          ) : (
+            <Image src={project.icon} alt={project.name} width={24} height={24} className="rounded-sm" />
+          )}
         </div>
 
         {/* Action links */}
@@ -160,7 +191,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-400 bg-white/5 border border-white/10 rounded-lg p-2 flex items-center transition-all duration-200 hover:text-cyan-400 hover:border-cyan-400/30 hover:bg-cyan-400/5 z-30 relative"
+              className="text-[#45454f] bg-white/[0.04] border border-white/[0.07] rounded-lg p-2 flex items-center transition-all duration-200 hover:text-indigo-300 hover:border-indigo-400/25 hover:bg-indigo-500/5 z-30 relative"
             >
               <ExternalIcon size={14} />
             </a>
@@ -170,7 +201,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-400 bg-white/5 border border-white/10 rounded-lg p-2 flex items-center transition-all duration-200 hover:text-white hover:border-white/30 hover:bg-white/10 z-30 relative"
+              className="text-[#45454f] bg-white/[0.04] border border-white/[0.07] rounded-lg p-2 flex items-center transition-all duration-200 hover:text-[#f1f0f5] hover:border-white/25 hover:bg-white/[0.08] z-30 relative"
             >
               <GitHubIcon size={15} />
             </a>
@@ -179,13 +210,13 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       </div>
 
       {/* Name */}
-      <h3 className="text-white text-lg font-bold font-heading mb-2 relative z-10">
+      <h3 className="text-[#f1f0f5] text-base font-semibold font-heading mb-2 relative z-10">
         {project.name}
       </h3>
 
       {/* Description */}
       <p
-        className={`text-slate-400 text-sm leading-relaxed font-mono mb-6 flex-1 transition-all duration-300 relative z-10 ${hovered ? "line-clamp-none opacity-100" : "line-clamp-3 opacity-90"}`}
+        className={`text-[#7a7a8c] text-xs leading-relaxed font-sans mb-5 flex-1 transition-all duration-300 relative z-10 ${hovered ? "line-clamp-none opacity-100" : "line-clamp-3 opacity-90"}`}
       >
         {hovered ? project.longDesc : project.description}
       </p>
@@ -195,7 +226,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         {project.stack.map((s) => (
           <span
             key={s}
-            className="text-[10px] font-mono text-slate-300 tracking-wider bg-white/5 border border-white/10 rounded px-2.5 py-1 uppercase"
+            className="text-[10px] font-mono text-purple-300/80 tracking-wider bg-purple-500/[0.08] border border-purple-400/[0.15] rounded px-2.5 py-1 uppercase"
           >
             {s}
           </span>
@@ -213,7 +244,7 @@ export default function Projects() {
     <div className="w-full max-w-5xl mx-auto mt-24 px-4 md:px-8">
       {/* Section heading */}
       <div className="flex items-center gap-3 mb-2">
-        <div className="text-cyan-400 bg-cyan-400/10 border border-cyan-400/20 rounded-lg p-2 flex">
+        <div className="text-indigo-400 bg-indigo-400/10 border border-indigo-400/20 rounded-lg p-2 flex">
           <svg
             width="20"
             height="20"
@@ -228,11 +259,11 @@ export default function Projects() {
             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
           </svg>
         </div>
-        <h2 className="text-white font-heading text-[clamp(24px,3vw,36px)] font-extrabold tracking-tight">
+        <h2 className="text-[#f1f0f5] font-heading text-2xl font-bold tracking-tight">
           Featured Projects
         </h2>
       </div>
-      <p className="text-slate-400 text-sm font-mono mb-10">
+      <p className="text-[#7a7a8c] text-xs font-[family-name:var(--font-jakarta)] mb-10">
         Showcasing my most ambitious full-stack and AI applications.
       </p>
 
