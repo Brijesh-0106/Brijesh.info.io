@@ -79,23 +79,14 @@ function StatusBadge({ status }: { status: PR["status"] }) {
   const s = STATUS_STYLES[status];
   return (
     <div
+      className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md border text-[10px] font-mono font-bold tracking-wider whitespace-nowrap shrink-0"
       style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 6,
         background: s.bg,
         color: s.color,
-        border: `1px solid ${s.border}`,
-        borderRadius: 6,
-        padding: "3px 10px",
-        fontSize: 11,
-        fontFamily: "var(--font-jetbrains), monospace",
-        fontWeight: 700,
-        letterSpacing: "0.05em",
-        whiteSpace: "nowrap",
+        borderColor: s.border,
       }}
     >
-      <MergedIcon size={12} />
+      <MergedIcon size={10} />
       {status}
     </div>
   );
@@ -194,107 +185,65 @@ function RepoRow({ repo }: { repo: Repo }) {
 
       {/* Expanded PRs */}
       {open && (
-        <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <div className="border-t border-white/[0.06]">
           {repo.prs.map((pr, i) => (
             <div
               key={pr.number}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 14,
-                padding: "14px 20px",
-                borderTop: i > 0 ? "1px solid rgba(255,255,255,0.04)" : "none",
-                background: "rgba(255,255,255,0.015)",
-              }}
+              className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 sm:px-5 sm:py-3.5 border-t border-white/[0.04] bg-white/[0.015]"
+              style={{ borderTop: i === 0 ? 'none' : undefined }}
             >
-              {/* PR info */}
-              <div className="relative">
-                <Image
-                  height={32}
-                  width={32}
-                  className="rounded-full"
-                  src={profileImg}
-                  alt="Profile Image"
-                  sizes="32px"
-                  quality={85}
-                />
-                <span
-                  className="absolute"
-                  style={{ bottom: "-4px", left: "20px" }}
-                >
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
-                    <rect width="24" height="24" rx="12" fill="black" />
-                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
-                  </svg>
-                </span>
-              </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <p
-                  style={{
-                    color: "#e2e8f0",
-                    fontSize: 13,
-                    fontWeight: 500,
-                    fontFamily: "var(--font-jetbrains), monospace",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}
-                >
-                  {pr.title}
-                </p>
-                <div className="flex items-center" style={{ gap: "8px" }}>
-                  <p
-                    style={{
-                      color: "#475569",
-                      fontSize: 11,
-                      fontFamily: "var(--font-jetbrains), monospace",
-                      marginTop: 2,
-                    }}
-                  >
-                    Pull Request #{pr.number}{" "}
-                  </p>
+              {/* Profile & Avatar */}
+              <div className="flex items-center gap-3 shrink-0">
+                <div className="relative">
+                  <Image
+                    height={32}
+                    width={32}
+                    className="rounded-full border border-white/10"
+                    src={profileImg}
+                    alt="Profile Image"
+                    sizes="32px"
+                    quality={85}
+                  />
                   <span
-                    className="flex items-center text-[#475569]"
-                    style={{ gap: "4px" }}
+                    className="absolute"
+                    style={{ bottom: "-4px", left: "20px" }}
                   >
-                    <span
-                      className="bg-gray-500 rounded-full flex"
-                      style={{
-                        backgroundColor: "gray",
-                        height: "5px",
-                        width: "5px",
-                      }}
-                    ></span>{" "}
-                    <span
-                      className="text-[#475569] text-[11px]"
-                      style={{ color: "#475569", fontSize: "11px" }}
-                    >
-                      Brijesh-0106
-                    </span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="white">
+                      <rect width="24" height="24" rx="12" fill="black" />
+                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
                   </span>
                 </div>
               </div>
 
-              {/* Status badge */}
-              <StatusBadge status={pr.status} />
+              {/* PR info */}
+              <div className="flex-1 min-w-0">
+                <p className="text-[#e2e8f0] text-[13px] font-medium font-mono line-clamp-2 sm:line-clamp-none">
+                  {pr.title}
+                </p>
+                <div className="flex items-center gap-2 mt-0.5">
+                  <p className="text-[#475569] text-[11px] font-mono">
+                    #{pr.number}
+                  </p>
+                  <div className="w-1 h-1 rounded-full bg-slate-700" />
+                  <p className="text-[#475569] text-[11px] font-mono truncate">
+                    Brijesh-0106
+                  </p>
+                </div>
+              </div>
 
-              <a
-                href={pr.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                style={{
-                  color: "#475569",
-                  display: "flex",
-                  alignItems: "center",
-                  transition: "color 0.2s",
-                  flexShrink: 0,
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#00e5a0")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "#475569")}
-              >
-                <ExternalLinkIcon size={15} />
-              </a>
+              {/* Status & Link */}
+              <div className="flex items-center gap-3 ml-auto sm:ml-0">
+                <StatusBadge status={pr.status} />
+                <a
+                  href={pr.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-500 hover:text-emerald-400 transition-colors p-1"
+                >
+                  <ExternalLinkIcon size={14} />
+                </a>
+              </div>
             </div>
           ))}
         </div>
@@ -314,107 +263,37 @@ export default function OpenSource() {
     <div className="w-full mx-auto mt-24 px-4">
       {/* Section heading */}
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "flex-end",
-          justifyContent: "space-between",
-          marginBottom: 32,
-        }}
-      >
-        <div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              marginBottom: 8,
-            }}
-          >
-            <div
-              style={{
-                color: "#fff",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: 40,
-                height: 40,
-                background: "rgba(255,255,255,0.06)",
-                borderRadius: 10,
-              }}
-            >
-              <GitHubIcon size={22} />
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-white shrink-0">
+              <GitHubIcon size={20} />
             </div>
-            <h2 className="font-heading"
-              style={{
-                color: "#fff",
-                fontSize: "24px",
-                fontWeight: 800,
-                lineHeight: 1,
-              }}
-            >
-              Open Source Contributions
+            <h2 className="text-[#f1f0f5] font-heading text-2xl font-bold tracking-tight">
+              Open Source
             </h2>
           </div>
-          <p
-            style={{
-              color: "#475569",
-              fontSize: 13,
-              fontFamily: "var(--font-jetbrains), monospace",
-            }}
-          >
+          <p className="text-[#7a7a8c] text-xs font-mono ml-1">
             Building and giving back to the community.
           </p>
         </div>
 
         {/* Quick stats */}
-        <div style={{ display: "flex", gap: 24, flexShrink: 0 }}>
-          <div style={{ textAlign: "right" }}>
-            <p
-              style={{
-                color: "#fff",
-                fontSize: 22,
-                fontWeight: 700,
-                fontFamily: "var(--font-jetbrains), monospace",
-                lineHeight: 1,
-              }}
-            >
+        <div className="flex gap-8 md:gap-10">
+          <div>
+            <p className="text-[#f1f0f5] text-xl font-bold font-mono leading-none">
               {totalPRs}
             </p>
-            <p
-              style={{
-                color: "#475569",
-                fontSize: 10,
-                fontFamily: "var(--font-jetbrains), monospace",
-                marginTop: 4,
-                letterSpacing: "0.12em",
-              }}
-            >
-              TOTAL PRs
+            <p className="text-[#475569] text-[9px] font-mono mt-2 tracking-[0.15em] uppercase">
+              Total PRs
             </p>
           </div>
-          <div style={{ textAlign: "right" }}>
-            <p
-              style={{
-                color: "#a78bfa",
-                fontSize: 22,
-                fontWeight: 700,
-                fontFamily: "var(--font-jetbrains), monospace",
-                lineHeight: 1,
-              }}
-            >
+          <div>
+            <p className="text-[#a78bfa] text-xl font-bold font-mono leading-none">
               {mergedPRs}
             </p>
-            <p
-              style={{
-                color: "#475569",
-                fontSize: 10,
-                fontFamily: "Space Mono, monospace",
-                marginTop: 4,
-                letterSpacing: "0.12em",
-              }}
-            >
-              MERGED
+            <p className="text-[#475569] text-[9px] font-mono mt-2 tracking-[0.15em] uppercase">
+              Merged
             </p>
           </div>
         </div>

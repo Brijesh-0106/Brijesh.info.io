@@ -92,6 +92,14 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  icons: {
+    icon: [
+      { url: "/brijesh.png" },
+      { url: "/brijesh.png", sizes: "32x32", type: "image/png" },
+    ],
+    shortcut: "/brijesh.png",
+    apple: "/brijesh.png",
+  },
 };
 
 export default function RootLayout({
