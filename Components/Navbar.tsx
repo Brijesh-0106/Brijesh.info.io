@@ -64,8 +64,19 @@ export default function Navbar() {
           {/* Divider */}
           <div className="hidden md:block w-px h-5 bg-white/10" />
 
-          {/* Social icons */}
+          {/* Social icons & Mobile Resume */}
           <div className="flex items-center gap-4">
+            <a
+              href="/Brijesh_Shah_Resume_final.pdf"
+              target="_blank"
+              download="Brijesh_Shah_Resume_final.pdf"
+              className="md:hidden flex items-center justify-center text-[13px] font-medium px-3 py-1 rounded-full border border-white/10 text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+            >
+              Resume
+            </a>
+            
+            <div className="md:hidden w-px h-4 bg-white/10" />
+
             {SOCIAL_LINKS.map((s) => (
               <a
                 key={s.name}
