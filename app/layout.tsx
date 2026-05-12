@@ -52,14 +52,17 @@ export const metadata: Metadata = {
   keywords: ["Software Engineer", "Full-stack Developer", "AI Engineer", "Next.js", "React", "Spring Boot", "TCS"],
   authors: [{ name: "Shah Brijesh" }],
   creator: "Shah Brijesh",
-  metadataBase: new URL("https://shahbrijesh.dev"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_BASE_URL || 
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://shahbrijesh.dev")
+  ),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://shahbrijesh.dev",
+    url: "/",
     title: "Shah Brijesh | Software Engineer",
     description:
       "Full-stack Software Engineer building scalable web apps, AI tools, and developer infrastructure.",
