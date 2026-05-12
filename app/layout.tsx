@@ -42,6 +42,9 @@ const plusJakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://brijesh-info-io.vercel.app");
+
 export const metadata: Metadata = {
   title: {
     default: "Shah Brijesh | Software Engineer",
@@ -52,10 +55,7 @@ export const metadata: Metadata = {
   keywords: ["Software Engineer", "Full-stack Developer", "AI Engineer", "Next.js", "React", "Spring Boot", "TCS"],
   authors: [{ name: "Shah Brijesh" }],
   creator: "Shah Brijesh",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_BASE_URL || 
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://shahbrijesh.dev")
-  ),
+  metadataBase: new URL(baseUrl),
   alternates: {
     canonical: "/",
   },
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     siteName: "Shah Brijesh Portfolio",
     images: [
       {
-        url: "/og-image.png",
+        url: `${baseUrl}/og-image.png`,
         width: 1200,
         height: 630,
         alt: "Shah Brijesh — Software Engineer",
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     title: "Shah Brijesh | Software Engineer",
     description:
       "Full-stack Software Engineer building scalable web apps, AI tools, and developer infrastructure.",
-    images: ["/og-image.png"],
+    images: [`${baseUrl}/og-image.png`],
     creator: "@shahbrijesh",
   },
   robots: {
