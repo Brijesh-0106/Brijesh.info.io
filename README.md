@@ -1,5 +1,7 @@
 # 🌌 Dark Luxury Portfolio
 
+![Dark Luxury Portfolio Landing Page](public/LandingPage.png)
+
 A premium, highly-interactive developer portfolio built with Next.js, React, and Tailwind CSS. Designed with a "Dark Luxury" aesthetic to showcase technical projects, skills, and professional experience with sophisticated animations and modern typography.
 
 ## ✨ Features
