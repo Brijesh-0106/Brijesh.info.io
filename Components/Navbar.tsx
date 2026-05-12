@@ -32,6 +32,7 @@ const NAV_LINKS = [
   { name: "Projects", path: "#projects" },
   { name: "Activity", path: "#activity" },
   { name: "Contact", path: "#contact" },
+  { name: "Resume", path: "/Brijesh_Shah_Resume_final.pdf", isDownload: true },
 ];
 
 const SOCIAL_LINKS = [
@@ -51,6 +52,8 @@ export default function Navbar() {
               <Link
                 key={item.path}
                 href={item.path}
+                target={item.isDownload ? "_blank" : undefined}
+                download={item.isDownload ? "Brijesh_Shah_Resume_final.pdf" : undefined}
                 className="text-[14px] font-medium text-slate-400 hover:text-white transition-colors duration-300 tracking-wide hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
               >
                 {item.name}
