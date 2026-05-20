@@ -42,8 +42,9 @@ const plusJakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://brijesh-info-io.vercel.app");
+// Always use the canonical production URL so social crawlers resolve OG images correctly.
+// VERCEL_URL points to the preview deployment (SSO-protected), so we must not use it.
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://brijesh-info-io.vercel.app";
 
 export const metadata: Metadata = {
   title: {
@@ -62,27 +63,28 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "/",
+    url: "https://brijesh-info-io.vercel.app",
     title: "Shah Brijesh | Software Engineer",
     description:
       "Full-stack Software Engineer building scalable web apps, AI tools, and developer infrastructure.",
     siteName: "Shah Brijesh Portfolio",
     images: [
       {
-        url: `${baseUrl}/og-image.png`,
+        url: "/brijesh.png",
         width: 1200,
-        height: 630,
+        height: 1200,
         alt: "Shah Brijesh — Software Engineer",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    card: "summary",
     title: "Shah Brijesh | Software Engineer",
     description:
       "Full-stack Software Engineer building scalable web apps, AI tools, and developer infrastructure.",
-    images: [`${baseUrl}/og-image.png`],
+    images: ["/brijesh.png"],
     creator: "@shahbrijesh",
+    site: "@shahbrijesh",
   },
   robots: {
     index: true,
