@@ -20,6 +20,20 @@ type Project = {
 
 const PROJECTS: Project[] = [
   {
+    name: "Kanvas",
+    description:
+      "Cloud development platform provisioning on-demand VS Code environments in AWS with active auto-scaling.",
+    longDesc:
+      "High-performance cloud IDE platform provisioning browser-based VS Code environments on-demand in AWS EC2. Features an Active-Heartbeat lifecycling engine with S3 cold storage and AWS Auto Scaling Groups to auto-terminate idle instances and cut cloud compute waste by 90%.",
+    stack: ["React", "TypeScript", "Node.js", "AWS EC2/S3", "Redis", "Docker", "MongoDB"],
+    liveUrl: "https://kanvas.usecerebro.co.in",
+    githubUrl: "https://github.com/Brijesh-0106/Kanvas-replit",
+    featured: true,
+    icon: "/kanvas.svg",
+    iconBg: "rgba(0,0,0)", // Orange tint (#f97316)
+    previewImage: "/kanvas-preview.png",
+  },
+  {
     name: "Cerebro",
     description:
       "Your AI-powered second brain. Save content from anywhere, search by meaning, and chat with your knowledge base.",
@@ -44,7 +58,7 @@ const PROJECTS: Project[] = [
     liveUrl: "https://newsaunty.vercel.app/",
     featured: true,
     icon: "/newsExpress.svg",
-    iconBg: "rgba(239,68,68,0.1)", // Red tint
+    iconBg: "rgba(0,0,0,0.1)", // Red tint
     previewImage: "/newExpress.png",
   },
   {
@@ -115,12 +129,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     <div
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className={`relative flex flex-col p-6 rounded-2xl transition-all duration-300 border bg-gradient-to-b from-[#0f0f17] to-[#0a0a10] overflow-hidden ${hovered ? "border-indigo-400/25 shadow-[0_0_30px_rgba(129,140,248,0.08)] -translate-y-1" : "border-white/[0.06]"}`}
+      className={`relative flex flex-col p-6 rounded-2xl transition-all duration-300 border bg-[#0f0f17] overflow-hidden ${hovered ? "border-white/20 bg-[#12121b] -translate-y-1" : "border-white/[0.06]"}`}
       style={{ cursor: "default", perspective: "1000px" }}
     >
       {/* Top accent line on hover */}
       <div
-        className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-indigo-400 to-purple-500 origin-left transition-transform duration-300 ease-out"
+        className="absolute top-0 left-0 right-0 h-[2px] bg-white/20 origin-left transition-transform duration-300 ease-out"
         style={{ transform: hovered ? "scaleX(1)" : "scaleX(0)" }}
       />
 
@@ -171,7 +185,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       <div className="flex items-start justify-between mb-4 relative z-10">
         {/* Icon */}
         <div
-          className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-xs font-bold font-mono text-white tracking-widest shadow-inner relative overflow-hidden"
+          className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-xs font-bold font-mono text-white tracking-widest relative overflow-hidden"
           style={{ background: project.iconBg }}
         >
           {typeof project.icon === "string" ? (
@@ -192,7 +206,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#45454f] bg-white/[0.04] border border-white/[0.07] rounded-lg p-2 flex items-center transition-all duration-200 hover:text-indigo-300 hover:border-indigo-400/25 hover:bg-indigo-500/5 z-30 relative"
+              className="text-zinc-400 bg-white/[0.04] border border-white/[0.07] rounded-lg p-2 flex items-center transition-colors duration-200 hover:text-white hover:border-white/20 hover:bg-white/[0.08] z-30 relative"
             >
               <ExternalIcon size={14} />
             </a>
@@ -202,7 +216,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#45454f] bg-white/[0.04] border border-white/[0.07] rounded-lg p-2 flex items-center transition-all duration-200 hover:text-[#f1f0f5] hover:border-white/25 hover:bg-white/[0.08] z-30 relative"
+              className="text-zinc-400 bg-white/[0.04] border border-white/[0.07] rounded-lg p-2 flex items-center transition-colors duration-200 hover:text-[#f1f0f5] hover:border-white/25 hover:bg-white/[0.08] z-30 relative"
             >
               <GitHubIcon size={15} />
             </a>
@@ -217,7 +231,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
       {/* Description */}
       <p
-        className={`text-[#7a7a8c] text-xs leading-relaxed font-sans mb-5 flex-1 transition-all duration-300 relative z-10 opacity-90`}
+        className="text-[#7a7a8c] text-xs leading-relaxed font-sans mb-5 flex-1 transition-all duration-300 relative z-10 opacity-90"
       >
         {project.longDesc}
       </p>
@@ -227,7 +241,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         {project.stack.map((s) => (
           <span
             key={s}
-            className="text-[10px] font-mono text-purple-300/80 tracking-wider bg-purple-500/[0.08] border border-purple-400/[0.15] rounded px-2.5 py-1 uppercase"
+            className="text-[10px] font-mono text-zinc-300 tracking-wider bg-white/[0.04] border border-white/[0.08] rounded px-2.5 py-1 uppercase"
           >
             {s}
           </span>
@@ -245,7 +259,7 @@ export default function Projects() {
     <div className="w-full max-w-5xl mx-auto mt-24 px-4 md:px-8">
       {/* Section heading */}
       <div className="flex items-center gap-3 mb-2">
-        <div className="text-indigo-400 bg-indigo-400/10 border border-indigo-400/20 rounded-lg p-2 flex">
+        <div className="text-zinc-300 bg-white/[0.04] border border-white/[0.08] rounded-lg p-2 flex">
           <svg
             width="20"
             height="20"

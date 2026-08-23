@@ -1,16 +1,16 @@
 "use client";
 
 const SKILLS = [
-  "React", "Next.js", "TypeScript", "Node.js", "Express", "PostgreSQL",
-  "MongoDB", "Prisma", "Tailwind CSS", "Docker", "Java", "Spring Boot",
-  "Python", "AWS", "Git", "REST APIs"
+  "React", "Next.js", "TS", "Node", "PostgreSQL",
+  "MongoDB", "Kubernetes", "Docker", "Java", "Spring Boot",
+  "Python", "AWS", "Git", "Redis"
 ];
 
 export default function Skills() {
   return (
     <div className="w-full max-w-5xl mx-auto px-4 md:px-8 py-16 mt-10">
       <div className="flex items-center gap-3 mb-8">
-        <div className="text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-lg p-2 flex">
+        <div className="text-zinc-300 bg-white/[0.04] border border-white/[0.08] rounded-lg p-2 flex">
           <svg
             width="20"
             height="20"
@@ -33,9 +33,9 @@ export default function Skills() {
         {SKILLS.map((skill, i) => (
           <div
             key={i}
-            className="flex items-center justify-center whitespace-nowrap bg-[#0f0f17] border border-white/[0.07] rounded-lg px-5 py-2.5 hover:border-indigo-400/30 hover:bg-indigo-500/[0.06] transition-all cursor-default shadow-sm hover:-translate-y-0.5"
+            className="flex items-center justify-center whitespace-nowrap bg-[#0f0f17] border border-white/[0.07] rounded-lg px-4 py-2 hover:border-white/20 hover:bg-white/[0.04] transition-colors cursor-default"
           >
-            <span className="text-[#a8a8b8] font-mono text-sm tracking-wide">
+            <span className="text-zinc-300 font-mono text-sm tracking-wide">
               {skill}
             </span>
           </div>

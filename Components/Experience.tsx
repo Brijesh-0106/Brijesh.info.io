@@ -97,29 +97,29 @@ function CardContent({ exp }: { exp: ExpItem }) {
       {/* Row 2: Company + badges LEFT, period RIGHT — no wrap */}
       <div className="flex items-center justify-between gap-3 mb-4">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-indigo-300 font-semibold font-mono text-xs">{exp.company}</span>
+          <span className="text-zinc-200 font-semibold font-mono text-xs">{exp.company}</span>
           {exp.website && (
-            <a href={exp.website} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-cyan-400 transition-colors">
+            <a href={exp.website} target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-white transition-colors">
               <WebIcon />
             </a>
           )}
           {exp.linkedin && (
-            <a href={exp.linkedin} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-indigo-400 transition-colors">
+            <a href={exp.linkedin} target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-white transition-colors">
               <LinkedInIcon />
             </a>
           )}
           {exp.current && (
-            <span className="text-[10px] font-bold tracking-widest font-mono text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded px-2 py-0.5">
+            <span className="text-[10px] font-bold tracking-widest font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-800/40 rounded px-2 py-0.5">
               CURRENT
             </span>
           )}
         </div>
-        <span className="text-indigo-300 text-[11px] font-semibold font-mono whitespace-nowrap bg-indigo-500/10 px-2.5 py-1 rounded-full border border-indigo-400/20 shrink-0">
+        <span className="text-zinc-300 text-[11px] font-medium font-mono whitespace-nowrap bg-white/[0.04] px-2.5 py-1 rounded-full border border-white/[0.08] shrink-0">
           {exp.period}
         </span>
       </div>
 
-      <p className="text-[#7a7a8c] text-sm leading-relaxed mb-4 font-sans">
+      <p className="text-zinc-400 text-sm leading-relaxed mb-4 font-sans">
         {exp.description}
       </p>
 
@@ -127,16 +127,16 @@ function CardContent({ exp }: { exp: ExpItem }) {
         {exp.bullets.map((b, i) => (
           <li key={i} className="flex gap-2.5 items-start">
             <div className="w-4 h-4 rounded-full bg-[#0a0a12] border border-white/[0.08] flex items-center justify-center shrink-0 mt-0.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
+              <div className="w-1.5 h-1.5 rounded-full bg-zinc-400" />
             </div>
-            <span className="text-[#7a7a8c] text-xs leading-relaxed font-sans">{b}</span>
+            <span className="text-zinc-400 text-xs leading-relaxed font-sans">{b}</span>
           </li>
         ))}
       </ul>
 
       <div className="flex flex-wrap gap-1.5">
         {exp.stack.map((s) => (
-          <span key={s} className="text-[11px] font-mono text-purple-300 bg-purple-500/[0.08] border border-purple-400/[0.15] rounded px-2.5 py-1">
+          <span key={s} className="text-[11px] font-mono text-zinc-300 bg-white/[0.04] border border-white/[0.08] rounded px-2.5 py-1">
             {s}
           </span>
         ))}
@@ -149,7 +149,7 @@ function CardContent({ exp }: { exp: ExpItem }) {
 function SectionHeading() {
   return (
     <div className="flex items-center gap-2 md:gap-3">
-      <div className="text-indigo-400 bg-indigo-400/10 border border-indigo-400/20 rounded-lg p-1.5 md:p-2">
+      <div className="text-zinc-300 bg-white/[0.04] border border-white/[0.08] rounded-lg p-1.5 md:p-2">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <rect x="2" y="7" width="20" height="14" rx="2" />
           <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
@@ -163,21 +163,19 @@ function SectionHeading() {
 }
 
 // ── Mobile: simple vertical timeline ──────────────────────────────────────────
-// No viewport-height math. Cards stack naturally, scroll normally.
 function MobileTimeline() {
   return (
     <div className="relative pl-6">
       {/* Vertical accent line */}
-      <div className="absolute left-0 top-3 bottom-3 w-px bg-gradient-to-b from-indigo-500/40 via-purple-500/20 to-transparent" />
+      <div className="absolute left-0 top-3 bottom-3 w-px bg-white/10" />
 
       <div className="flex flex-col gap-5">
         {EXPERIENCE.map((exp, i) => (
           <div key={i} className="relative">
             {/* Dot on the line */}
-            <div className="absolute -left-6 top-5 w-2.5 h-2.5 rounded-full bg-indigo-400 border-2 border-[#08080c] shadow-[0_0_8px_rgba(129,140,248,0.5)]" />
+            <div className="absolute -left-6 top-5 w-2.5 h-2.5 rounded-full bg-zinc-400 border-2 border-[#08080c]" />
 
-            <div className="bg-[#0f0f17] border border-white/[0.07] rounded-2xl p-5 shadow-xl relative overflow-hidden group transition-all duration-300 hover:border-indigo-400/20">
-              <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500/10 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl blur-xl" />
+            <div className="bg-[#0f0f17] border border-white/[0.07] rounded-2xl p-5 shadow-xl relative overflow-hidden transition-all duration-300 hover:border-white/20">
               <CardContent exp={exp} />
             </div>
           </div>
@@ -213,8 +211,7 @@ function AnimatedCard({ exp, progress, index, total }: { exp: ExpItem; progress:
       style={{ opacity, y, scale, pointerEvents }}
       className="absolute inset-0 flex flex-col justify-center items-center w-full"
     >
-      <div className="w-full max-w-3xl bg-[#0f0f17] backdrop-blur-xl border border-white/[0.07] rounded-2xl p-8 shadow-2xl relative overflow-hidden group">
-        <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500/15 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl blur-xl" />
+      <div className="w-full max-w-3xl bg-[#0f0f17] border border-white/[0.08] rounded-2xl p-8 shadow-2xl relative overflow-hidden">
         <CardContent exp={exp} />
       </div>
     </motion.div>
@@ -245,9 +242,9 @@ function DesktopExperience() {
         </div>
 
         {/* Progress bar */}
-        <div className="absolute left-12 top-1/4 bottom-1/4 w-1 bg-slate-800 rounded-full overflow-hidden z-20">
+        <div className="absolute left-12 top-1/4 bottom-1/4 w-1 bg-zinc-800 rounded-full overflow-hidden z-20">
           <motion.div
-            className="w-full bg-gradient-to-b from-cyan-400 to-violet-500 origin-top"
+            className="w-full bg-zinc-400 origin-top"
             style={{ scaleY: smoothProgress }}
           />
         </div>

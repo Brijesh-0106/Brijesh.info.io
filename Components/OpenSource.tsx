@@ -19,12 +19,11 @@ type Repo = {
   prs: PR[];
 };
 
-const CONTRIBUTIONS: Repo[] = [
+const DEFAULT_CONTRIBUTIONS: Repo[] = [
   {
     name: "OpenMRS",
     repoUrl: "https://github.com/openmrs",
-    avatarUrl:
-      "https://imgs.search.brave.com/iMyrLULrkbrnQwczL9LpnTrR7d80zrQih1Uyt_oQAwE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90YWxr/Lm9wZW5tcnMub3Jn/L3VwbG9hZHMvZGVm/YXVsdC9vcmlnaW5h/bC8yWC84LzgwZmQ2/MDg2ZGNhMGEzYTM4/ZjlkM2I4MWZkZjQ4/MTk2ZTFmZTMwN2Yu/cG5n",
+    avatarUrl: "https://github.com/openmrs.png",
     prs: [
       {
         title: "Error When Adding a Patient Twice to the Queue",
@@ -59,19 +58,19 @@ const STATUS_STYLES: Record<
   { bg: string; color: string; border: string }
 > = {
   MERGED: {
-    bg: "rgba(139,92,246,0.12)",
-    color: "#a78bfa",
-    border: "rgba(139,92,246,0.3)",
+    bg: "rgba(255,255,255,0.06)",
+    color: "#e2e8f0",
+    border: "rgba(255,255,255,0.12)",
   },
   OPEN: {
     bg: "rgba(34,197,94,0.10)",
     color: "#4ade80",
-    border: "rgba(34,197,94,0.3)",
+    border: "rgba(34,197,94,0.25)",
   },
   CLOSED: {
     bg: "rgba(239,68,68,0.10)",
     color: "#f87171",
-    border: "rgba(239,68,68,0.3)",
+    border: "rgba(239,68,68,0.25)",
   },
 };
 
@@ -105,10 +104,10 @@ function RepoRow({ repo }: { repo: Repo }) {
         transition: "border-color 0.2s",
       }}
       onMouseEnter={(e) =>
-        (e.currentTarget.style.borderColor = "rgba(0,229,160,0.2)")
+        (e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)")
       }
       onMouseLeave={(e) =>
-        (e.currentTarget.style.borderColor = "rgba(255,255,255,0.07)")
+        (e.currentTarget.style.borderColor = "rgba(255,255,255,0.05)")
       }
     >
       <button
@@ -133,7 +132,6 @@ function RepoRow({ repo }: { repo: Repo }) {
           height={32}
           style={{ borderRadius: 8, flexShrink: 0, background: "#161b22" }}
           onError={(e) => {
-            // fallback to github icon if avatar fails
             e.currentTarget.style.display = "none";
           }}
         />
@@ -239,7 +237,7 @@ function RepoRow({ repo }: { repo: Repo }) {
                   href={pr.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-slate-500 hover:text-emerald-400 transition-colors p-1"
+                  className="text-slate-500 hover:text-white transition-colors p-1"
                 >
                   <ExternalLinkIcon size={14} />
                 </a>
@@ -252,9 +250,11 @@ function RepoRow({ repo }: { repo: Repo }) {
   );
 }
 
-export default function OpenSource() {
-  const totalPRs = CONTRIBUTIONS.reduce((acc, r) => acc + r.prs.length, 0);
-  const mergedPRs = CONTRIBUTIONS.reduce(
+export default function OpenSource({ initialRepos }: { initialRepos?: Repo[] | null }) {
+  const repos = initialRepos && initialRepos.length > 0 ? initialRepos : DEFAULT_CONTRIBUTIONS;
+
+  const totalPRs = repos.reduce((acc, r) => acc + r.prs.length, 0);
+  const mergedPRs = repos.reduce(
     (acc, r) => acc + r.prs.filter((p) => p.status === "MERGED").length,
     0,
   );
@@ -262,7 +262,6 @@ export default function OpenSource() {
   return (
     <div className="w-full mx-auto mt-24 px-4">
       {/* Section heading */}
-
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-3">
@@ -289,7 +288,7 @@ export default function OpenSource() {
             </p>
           </div>
           <div>
-            <p className="text-[#a78bfa] text-xl font-bold font-mono leading-none">
+            <p className="text-[#f1f0f5] text-xl font-bold font-mono leading-none">
               {mergedPRs}
             </p>
             <p className="text-[#475569] text-[9px] font-mono mt-2 tracking-[0.15em] uppercase">
@@ -301,10 +300,10 @@ export default function OpenSource() {
 
       {/* Repo list */}
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        {CONTRIBUTIONS.map((repo) => (
+        {repos.map((repo) => (
           <RepoRow key={repo.name} repo={repo} />
         ))}
       </div>
-    </div >
+    </div>
   );
 }

@@ -36,24 +36,36 @@ function getLevel(count: number): Level {
   if (count <= 9) return 3;
   return 4;
 }
-function buildGrid(calendar: Record<string, number>): DayData[] {
-  // June 1 2025, aligned to nearest Sunday before it
-  const start = new Date("2025-06-01");
-  start.setDate(start.getDate() - start.getDay());
 
-  // May 31 2026
-  const end = new Date("2026-05-31");
+function buildGrid(calendar: Record<string, number>): { days: DayData[]; rangeLabel: string } {
+  const today = new Date();
+  
+  // Align end to current Saturday (end of week)
+  const end = new Date(today);
+  end.setDate(today.getDate() + (6 - today.getDay()));
+  
+  // 52 weeks before end
+  const start = new Date(end);
+  start.setDate(start.getDate() - 52 * 7 + 1);
+  start.setDate(start.getDate() - start.getDay()); // Sunday
 
   const days: DayData[] = [];
   const cursor = new Date(start);
 
   while (cursor <= end) {
     const ts = Math.floor(cursor.getTime() / 1000);
+    const dUtc = new Date(Date.UTC(cursor.getFullYear(), cursor.getMonth(), cursor.getDate()));
+    const tsUtc = Math.floor(dUtc.getTime() / 1000);
+
     const count =
+      calendar[String(tsUtc)] ||
       calendar[String(ts)] ||
+      calendar[String(tsUtc - 86400)] ||
+      calendar[String(tsUtc + 86400)] ||
       calendar[String(ts - 86400)] ||
       calendar[String(ts + 86400)] ||
       0;
+
     days.push({
       date: cursor.toISOString().split("T")[0],
       count,
@@ -61,7 +73,11 @@ function buildGrid(calendar: Record<string, number>): DayData[] {
     });
     cursor.setDate(cursor.getDate() + 1);
   }
-  return days;
+
+  const startMonth = start.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+  const endMonth = end.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+
+  return { days, rangeLabel: `${startMonth} – ${endMonth}` };
 }
 
 interface Props {
@@ -69,10 +85,12 @@ interface Props {
   medium: number;
   hard: number;
   total: number;
+  ranking?: number | null;
 }
 
-export default function LeetCodeHeatmap({ easy, medium, hard, total }: Props) {
+export default function LeetCodeHeatmap({ easy, medium, hard, total, ranking }: Props) {
   const [days, setDays] = useState<DayData[]>([]);
+  const [rangeLabel, setRangeLabel] = useState("");
   const [activeDays, setActive] = useState(0);
   const [totalSubs, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -84,7 +102,9 @@ export default function LeetCodeHeatmap({ easy, medium, hard, total }: Props) {
         const raw: Record<string, number> = JSON.parse(
           data.submissionCalendar || "{}",
         );
-        setDays(buildGrid(raw));
+        const grid = buildGrid(raw);
+        setDays(grid.days);
+        setRangeLabel(grid.rangeLabel);
         setActive(
           data.activeDays || Object.values(raw).filter((v) => v > 0).length,
         );
@@ -249,7 +269,7 @@ export default function LeetCodeHeatmap({ easy, medium, hard, total }: Props) {
                 lineHeight: 1,
               }}
             >
-              TOP 6%
+              {ranking ? `#${ranking.toLocaleString()}` : "TOP 5%"}
             </p>
             <p
               style={{
@@ -261,7 +281,7 @@ export default function LeetCodeHeatmap({ easy, medium, hard, total }: Props) {
                 whiteSpace: "nowrap",
               }}
             >
-              GLOBAL
+              GLOBAL RANK
             </p>
           </div>
         </div>
@@ -371,7 +391,7 @@ export default function LeetCodeHeatmap({ easy, medium, hard, total }: Props) {
             >
               {loading
                 ? "Loading..."
-                : `${totalSubs} submissions · Jun 2025 – May 2026`}
+                : `${totalSubs} submissions · ${rangeLabel || "Last 12 Months"}`}
             </p>
             <div style={{ display: "flex", gap: 4, fontSize: "14px", alignItems: "center", color: "#8b99ad" }}>
               <span style={{ marginRight: "0.4em" }}>Less</span>

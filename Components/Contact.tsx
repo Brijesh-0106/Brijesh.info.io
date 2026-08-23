@@ -40,7 +40,7 @@ function LocationCard() {
       
       {/* Clock */}
         <div className="flex items-center gap-2 text-[#7a7a8c] font-mono text-sm bg-white/[0.03] px-4 py-2 rounded-full border border-white/[0.06] mt-4">
-          <div className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
+          <div className="w-2 h-2 rounded-full bg-emerald-400" />
         {time || "Loading time..."} (IST)
       </div>
     </div>
@@ -63,7 +63,7 @@ export default function Contact() {
     <div className="w-full max-w-5xl mx-auto mt-16 md:mt-32 mb-8 md:mb-16 px-4 md:px-8">
       <div className="flex flex-col items-center text-center mb-8 md:mb-16">
         <h2 className="text-2xl font-bold font-heading text-[#f1f0f5] tracking-tight mb-3">
-          Let's <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Connect</span>
+          Let's Connect
         </h2>
         <p className="text-[#7a7a8c] font-[family-name:var(--font-jakarta)] text-xs max-w-sm mx-auto">
           Send a quick message or check out my local time.
@@ -92,28 +92,28 @@ export default function Contact() {
                 id="name"
                 type="text" 
                 placeholder="Name"
-                className="w-full bg-[#0a0a12] border border-white/[0.06] rounded-xl px-4 py-3 text-[#f1f0f5] placeholder:text-[#45454f] focus:outline-none focus:ring-1 focus:ring-indigo-400/30 transition-all font-sans text-sm"
+                className="w-full bg-[#0a0a12] border border-white/[0.06] rounded-xl px-4 py-3 text-[#f1f0f5] placeholder:text-[#45454f] focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all font-sans text-sm"
               />
               <input 
                 required
                 id="email"
                 type="email" 
                 placeholder="Email Address"
-                className="w-full bg-[#0a0a12] border border-white/[0.06] rounded-xl px-4 py-3 text-[#f1f0f5] placeholder:text-[#45454f] focus:outline-none focus:ring-1 focus:ring-indigo-400/30 transition-all font-sans text-sm"
+                className="w-full bg-[#0a0a12] border border-white/[0.06] rounded-xl px-4 py-3 text-[#f1f0f5] placeholder:text-[#45454f] focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all font-sans text-sm"
               />
               <textarea 
                 required
                 id="message"
                 rows={3}
                 placeholder="Your message..."
-                className="w-full bg-[#0a0a12] border border-white/[0.06] rounded-xl px-4 py-3 text-[#f1f0f5] placeholder:text-[#45454f] focus:outline-none focus:ring-1 focus:ring-indigo-400/30 transition-all font-sans resize-none text-sm flex-grow"
+                className="w-full bg-[#0a0a12] border border-white/[0.06] rounded-xl px-4 py-3 text-[#f1f0f5] placeholder:text-[#45454f] focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all font-sans resize-none text-sm flex-grow"
               />
             </div>
 
             <button 
               type="submit"
               disabled={status !== "idle"}
-              className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold font-sans rounded-xl py-3 transition-all hover:opacity-90 hover:scale-[1.01] active:scale-95 disabled:opacity-50 flex justify-center items-center gap-2 text-sm tracking-wide"
+              className="w-full bg-white text-zinc-950 font-medium font-sans rounded-xl py-3 transition-all hover:bg-zinc-200 active:scale-[0.99] disabled:opacity-50 flex justify-center items-center gap-2 text-sm tracking-wide cursor-pointer"
             >
               {status === "idle" && (
                 <>
@@ -125,7 +125,7 @@ export default function Contact() {
                 </>
               )}
               {status === "submitting" && (
-                <div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-zinc-400 border-t-zinc-950 rounded-full animate-spin" />
               )}
               {status === "success" && (
                 <>

@@ -53,25 +53,9 @@ code, kbd, pre, .font-mono {
   font-size: 0.8125rem; /* 13px */
 }
 
-/* ─── Background mesh ──────────────────────────────────────────────────────── */
+/* ─── Background ───────────────────────────────────────────────────────────── */
 .bg-mesh {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  background-image:
-    radial-gradient(at 15% 10%, rgba(129, 140, 248, 0.12) 0px, transparent 55%),
-    radial-gradient(at 85% 5%,  rgba(167, 139, 250, 0.08) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(129, 140, 248, 0.05) 0px, transparent 60%);
-  pointer-events: none;
-  animation: breathe 12s ease-in-out infinite alternate;
-}
-
-@keyframes breathe {
-  0%   { opacity: 0.8; transform: scale(1); }
-  100% { opacity: 1;   transform: scale(1.04); }
+  display: none;
 }
 
 /* ─── Scrollbar hide ───────────────────────────────────────────────────────── */
@@ -83,19 +67,4 @@ code, kbd, pre, .font-mono {
 .no-scrollbar::-webkit-scrollbar,
 .no-scrollbar *::-webkit-scrollbar {
   display: none !important;
-}
-
-/* ─── Shimmer text ─────────────────────────────────────────────────────────── */
-.text-shimmer {
-  background: linear-gradient(90deg, #f1f0f5, #818cf8, #a78bfa, #f1f0f5);
-  background-size: 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: shimmer 3.5s infinite linear;
-}
-
-@keyframes shimmer {
-  0%   { background-position: 0% }
-  100% { background-position: 200% }
 }

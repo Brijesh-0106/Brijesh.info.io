@@ -44,22 +44,21 @@ const SOCIAL_LINKS = [
 export default function Navbar() {
   return (
     <nav className="text-white absolute top-5 left-1/2 -translate-x-1/2 z-50 w-full max-w-6xl px-4 flex justify-center">
-            <div className="relative p-[1px] rounded-full bg-gradient-to-r from-indigo-500/40 via-purple-500/20 to-indigo-500/40 shadow-[0_0_40px_rgba(99,102,241,0.15)]">
-        <div className="bg-[#0a0a0f]/80 backdrop-blur-xl rounded-full px-8 py-3.5 flex items-center gap-8 border border-white/5">
-          {/* Nav links */}
-          <div className="hidden md:flex gap-8 items-center">
-            {NAV_LINKS.map((item) => (
-              <Link
-                key={item.path}
-                href={item.path}
-                target={item.isDownload ? "_blank" : undefined}
-                download={item.isDownload ? "Brijesh_Shah_Resume_final.pdf" : undefined}
-                className="text-[14px] font-medium text-slate-400 hover:text-white transition-colors duration-300 tracking-wide hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </div>
+      <div className="bg-[#0a0a0f]/90 backdrop-blur-md rounded-full px-8 py-3.5 flex items-center gap-8 border border-white/10 shadow-lg">
+        {/* Nav links */}
+        <div className="hidden md:flex gap-8 items-center">
+          {NAV_LINKS.map((item) => (
+            <Link
+              key={item.path}
+              href={item.path}
+              target={item.isDownload ? "_blank" : undefined}
+              download={item.isDownload ? "Brijesh_Shah_Resume_final.pdf" : undefined}
+              className="text-[14px] font-medium text-slate-300 hover:text-white transition-colors duration-200 tracking-wide"
+            >
+              {item.name}
+            </Link>
+          ))}
+        </div>
 
           {/* Divider */}
           <div className="hidden md:block w-px h-5 bg-white/10" />
@@ -91,7 +90,6 @@ export default function Navbar() {
             ))}
           </div>
         </div>
-      </div>
     </nav>
   );
 }

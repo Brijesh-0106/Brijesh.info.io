@@ -34,19 +34,22 @@ async function fetchCalendar(year: number) {
 
 export async function GET() {
     try {
-        const [cal2025, cal2026] = await Promise.all([
-            fetchCalendar(2025),
-            fetchCalendar(2026),
+        const currentYear = new Date().getFullYear();
+        const [calPrev, calCurr] = await Promise.all([
+            fetchCalendar(currentYear - 1),
+            fetchCalendar(currentYear),
         ]);
 
-        const raw2025 = JSON.parse(cal2025?.submissionCalendar || "{}");
-        const raw2026 = JSON.parse(cal2026?.submissionCalendar || "{}");
-        const merged = { ...raw2025, ...raw2026 };
+        const rawPrev = JSON.parse(calPrev?.submissionCalendar || "{}");
+        const rawCurr = JSON.parse(calCurr?.submissionCalendar || "{}");
+        const merged = { ...rawPrev, ...rawCurr };
+
+        const totalActiveDays = (calPrev?.totalActiveDays || 0) + (calCurr?.totalActiveDays || 0);
 
         return NextResponse.json({
             submissionCalendar: JSON.stringify(merged),
-            activeDays: (cal2025?.totalActiveDays || 0) + (cal2026?.totalActiveDays || 0),
-            streak: cal2026?.streak || cal2025?.streak || 0,
+            activeDays: totalActiveDays || Object.keys(merged).length,
+            streak: calCurr?.streak || calPrev?.streak || 0,
         });
     } catch (e) {
         return NextResponse.json({ error: "Failed to fetch LeetCode data" }, { status: 500 });
