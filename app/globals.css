@@ -19,11 +19,11 @@
 
 :root {
   --background: #08080c;
-  --foreground: #f1f0f5;
+  --foreground: #e2e8f0;
   /* Semantic text tokens */
-  --text-primary: #f1f0f5;
-  --text-secondary: #7a7a8c;
-  --text-muted: #45454f;
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
 }
 
 body {
@@ -67,4 +67,29 @@ code, kbd, pre, .font-mono {
 .no-scrollbar::-webkit-scrollbar,
 .no-scrollbar *::-webkit-scrollbar {
   display: none !important;
+}
+
+/* ─── Custom Terminal Scrollbar ────────────────────────────────────────────── */
+.terminal-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.16) transparent;
+}
+
+.terminal-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.terminal-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.16);
+  border-radius: 9999px;
+  transition: background-color 0.2s ease;
+}
+
+.terminal-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.32);
 }

@@ -54,17 +54,17 @@ export default function Herosection() {
 
               {/* Name & Title */}
               <div className="flex flex-col items-center lg:items-start mt-4 lg:mt-0">
-                <h1 className="font-heading text-xl md:text-[30px] font-bold tracking-tight mb-2 leading-none text-white">
+                <h1 className="font-heading text-xl md:text-[30px] font-bold tracking-tight mb-2 leading-none text-slate-100">
                   Shah Brijesh
                 </h1>
-                <p className="text-sm md:text-base font-medium text-zinc-400 tracking-wide font-sans">
+                <p className="text-sm md:text-base font-medium text-slate-400 tracking-wide font-sans">
                   Software Engineer
                 </p>
               </div>
             </div>
 
             {/* Description */}
-            <p className="text-zinc-400 text-sm md:text-base leading-relaxed mb-8 max-w-[480px] font-sans">
+            <p className="text-slate-400 text-sm md:text-base leading-relaxed mb-8 max-w-[480px] font-sans">
               I build full-stack web applications with a focus on modern UI/UX, AI integrations, and scalable architectures. Welcome to my digital workspace.
             </p>
 
@@ -78,13 +78,13 @@ export default function Herosection() {
             <div className="flex gap-3 flex-wrap justify-center lg:justify-start w-full">
               <a
                 href="#projects"
-                className="px-5 py-2.5 rounded-lg bg-white/5 border border-white/10 text-white text-sm font-medium hover:bg-white/10 hover:border-white/20 transition-all duration-200 w-full sm:w-auto text-center"
+                className="px-5 py-2.5 rounded-lg bg-slate-900/80 border border-slate-800 text-slate-300 text-sm font-medium hover:bg-slate-800 hover:text-slate-100 hover:border-slate-700 transition-all duration-200 w-full sm:w-auto text-center"
               >
                 View Work
               </a>
               <a
                 href="#contact"
-                className="px-5 py-2.5 rounded-lg bg-white text-zinc-950 text-sm font-medium hover:bg-zinc-200 transition-all duration-200 w-full sm:w-auto text-center"
+                className="px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-slate-100 text-sm font-medium shadow-lg shadow-indigo-950/50 border border-indigo-400/20 hover:border-indigo-400/40 transition-all duration-200 w-full sm:w-auto text-center"
               >
                 Hire Me
               </a>
@@ -94,8 +94,8 @@ export default function Herosection() {
           {/* ── Right: terminal ── */}
           <div className="flex-1 w-full min-w-0">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-1.5 h-1.5 rounded-full bg-zinc-500" />
-              <span className="text-[10px] font-mono text-zinc-500 tracking-[0.18em] uppercase">
+              <div className="w-1.5 h-1.5 rounded-full bg-slate-600" />
+              <span className="text-[10px] font-mono text-slate-500 tracking-[0.18em] uppercase">
                 Ask me anything
               </span>
             </div>
@@ -111,7 +111,7 @@ export default function Herosection() {
                 <button
                   key={prompt}
                   onClick={() => handleSuggestionClick(prompt)}
-                  className="text-[11px] font-mono text-zinc-400 bg-white/[0.03] border border-white/[0.06] rounded-full px-3 py-1.5 hover:text-white hover:border-white/20 hover:bg-white/[0.06] transition-all duration-200 cursor-pointer"
+                  className="text-[11px] font-mono text-slate-400 bg-slate-900/80 border border-slate-800/80 rounded-full px-3 py-1.5 hover:text-sky-300 hover:border-slate-700 hover:bg-slate-850 transition-all duration-200 cursor-pointer"
                 >
                   {prompt}
                 </button>

@@ -43,8 +43,8 @@ const SOCIAL_LINKS = [
 
 export default function Navbar() {
   return (
-    <nav className="text-white absolute top-5 left-1/2 -translate-x-1/2 z-50 w-full max-w-6xl px-4 flex justify-center">
-      <div className="bg-[#0a0a0f]/90 backdrop-blur-md rounded-full px-8 py-3.5 flex items-center gap-8 border border-white/10 shadow-lg">
+    <nav className="text-slate-200 absolute top-5 left-1/2 -translate-x-1/2 z-50 w-full max-w-6xl px-4 flex justify-center">
+      <div className="bg-[#0a0a0f]/90 backdrop-blur-md rounded-full px-8 py-3.5 flex items-center gap-8 border border-white/[0.08] shadow-lg">
         {/* Nav links */}
         <div className="hidden md:flex gap-8 items-center">
           {NAV_LINKS.map((item) => (
@@ -53,7 +53,7 @@ export default function Navbar() {
               href={item.path}
               target={item.isDownload ? "_blank" : undefined}
               download={item.isDownload ? "Brijesh_Shah_Resume_final.pdf" : undefined}
-              className="text-[14px] font-medium text-slate-300 hover:text-white transition-colors duration-200 tracking-wide"
+              className="text-[14px] font-medium text-slate-300 hover:text-slate-100 transition-colors duration-200 tracking-wide"
             >
               {item.name}
             </Link>
@@ -61,7 +61,7 @@ export default function Navbar() {
         </div>
 
           {/* Divider */}
-          <div className="hidden md:block w-px h-5 bg-white/10" />
+          <div className="hidden md:block w-px h-5 bg-white/[0.08]" />
 
           {/* Social icons & Mobile Resume */}
           <div className="flex items-center gap-4">
@@ -69,12 +69,12 @@ export default function Navbar() {
               href="/Brijesh_Shah_Resume_final.pdf"
               target="_blank"
               download="Brijesh_Shah_Resume_final.pdf"
-              className="md:hidden flex items-center justify-center text-[13px] font-medium px-3 py-1 rounded-full border border-white/10 text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+              className="md:hidden flex items-center justify-center text-[13px] font-medium px-3 py-1 rounded-full border border-slate-800 text-slate-400 hover:text-slate-100 hover:bg-slate-800 transition-all"
             >
               Resume
             </a>
             
-            <div className="md:hidden w-px h-4 bg-white/10" />
+            <div className="md:hidden w-px h-4 bg-white/[0.08]" />
 
             {SOCIAL_LINKS.map((s) => (
               <a
@@ -83,7 +83,7 @@ export default function Navbar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={s.name}
-                className={`text-[#45454f] ${s.hover} transition-colors duration-200`}
+                className={`text-[#64748b] hover:text-slate-200 transition-colors duration-200`}
               >
                 {s.icon}
               </a>

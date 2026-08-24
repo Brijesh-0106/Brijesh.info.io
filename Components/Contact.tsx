@@ -30,16 +30,16 @@ function LocationCard() {
       
       {/* Map Pin Icon */}
       <div className="w-16 h-16 rounded-full bg-white/[0.03] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-white/5">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-200">
           <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
           <circle cx="12" cy="10" r="3" />
         </svg>
       </div>
 
-      <h3 className="text-lg font-bold font-heading text-[#f1f0f5] mb-2">Ahmedabad, India</h3>
+      <h3 className="text-lg font-bold font-heading text-slate-100 mb-2">Ahmedabad, India</h3>
       
       {/* Clock */}
-        <div className="flex items-center gap-2 text-[#7a7a8c] font-mono text-sm bg-white/[0.03] px-4 py-2 rounded-full border border-white/[0.06] mt-4">
+        <div className="flex items-center gap-2 text-slate-400 font-mono text-sm bg-white/[0.03] px-4 py-2 rounded-full border border-white/[0.06] mt-4">
           <div className="w-2 h-2 rounded-full bg-emerald-400" />
         {time || "Loading time..."} (IST)
       </div>
@@ -62,10 +62,10 @@ export default function Contact() {
   return (
     <div className="w-full max-w-5xl mx-auto mt-16 md:mt-32 mb-8 md:mb-16 px-4 md:px-8">
       <div className="flex flex-col items-center text-center mb-8 md:mb-16">
-        <h2 className="text-2xl font-bold font-heading text-[#f1f0f5] tracking-tight mb-3">
+        <h2 className="text-2xl font-bold font-heading text-slate-100 tracking-tight mb-3">
           Let's Connect
         </h2>
-        <p className="text-[#7a7a8c] font-[family-name:var(--font-jakarta)] text-xs max-w-sm mx-auto">
+        <p className="text-slate-400 font-[family-name:var(--font-jakarta)] text-xs max-w-sm mx-auto">
           Send a quick message or check out my local time.
         </p>
       </div>
@@ -92,28 +92,28 @@ export default function Contact() {
                 id="name"
                 type="text" 
                 placeholder="Name"
-                className="w-full bg-[#0a0a12] border border-white/[0.06] rounded-xl px-4 py-3 text-[#f1f0f5] placeholder:text-[#45454f] focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all font-sans text-sm"
+                className="w-full bg-[#0a0a12] border border-white/[0.06] rounded-xl px-4 py-3 text-slate-100 placeholder:text-[#64748b] focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all font-sans text-sm"
               />
               <input 
                 required
                 id="email"
                 type="email" 
                 placeholder="Email Address"
-                className="w-full bg-[#0a0a12] border border-white/[0.06] rounded-xl px-4 py-3 text-[#f1f0f5] placeholder:text-[#45454f] focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all font-sans text-sm"
+                className="w-full bg-[#0a0a12] border border-white/[0.06] rounded-xl px-4 py-3 text-slate-100 placeholder:text-[#64748b] focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all font-sans text-sm"
               />
               <textarea 
                 required
                 id="message"
                 rows={3}
                 placeholder="Your message..."
-                className="w-full bg-[#0a0a12] border border-white/[0.06] rounded-xl px-4 py-3 text-[#f1f0f5] placeholder:text-[#45454f] focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all font-sans resize-none text-sm flex-grow"
+                className="w-full bg-[#0a0a12] border border-white/[0.06] rounded-xl px-4 py-3 text-slate-100 placeholder:text-[#64748b] focus:outline-none focus:border-white/20 focus:ring-1 focus:ring-white/20 transition-all font-sans resize-none text-sm flex-grow"
               />
             </div>
 
             <button 
               type="submit"
               disabled={status !== "idle"}
-              className="w-full bg-white text-zinc-950 font-medium font-sans rounded-xl py-3 transition-all hover:bg-zinc-200 active:scale-[0.99] disabled:opacity-50 flex justify-center items-center gap-2 text-sm tracking-wide cursor-pointer"
+              className="w-full bg-indigo-600 hover:bg-indigo-500 text-slate-100 font-medium font-sans rounded-xl py-3 shadow-lg shadow-indigo-950/50 border border-indigo-400/20 hover:border-indigo-400/40 transition-all duration-200 active:scale-[0.99] disabled:opacity-50 flex justify-center items-center gap-2 text-sm tracking-wide cursor-pointer"
             >
               {status === "idle" && (
                 <>
@@ -125,7 +125,7 @@ export default function Contact() {
                 </>
               )}
               {status === "submitting" && (
-                <div className="w-5 h-5 border-2 border-zinc-400 border-t-zinc-950 rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-indigo-300 border-t-white rounded-full animate-spin" />
               )}
               {status === "success" && (
                 <>

@@ -15,9 +15,8 @@ interface TerminalHeroProps {
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 const DEMO_QUESTION = "what is this?";
-const PROMPT_PREFIX = "visitor@brijesh.dev:~$ ";
 const DEMO_REPLY = [
-  "[system]: Initializing interactive portfolio...",
+  "[system]: Initializing interactive portfolio shell...",
   "",
   "Welcome! I'm Brijesh, a Software Engineer based in India.",
   "I build high-end, full-stack web apps with modern UI/UX and AI integrations.",
@@ -27,6 +26,19 @@ const DEMO_REPLY = [
 
 function sleep(ms: number) {
   return new Promise<void>((r) => setTimeout(r, ms));
+}
+
+function PromptPrefix() {
+  return (
+    <span className="inline-flex items-center shrink-0 select-none mr-2">
+      <span className="text-emerald-400/90 font-medium">brijesh</span>
+      <span className="text-slate-600">@</span>
+      <span className="text-indigo-300 font-medium">portfolio</span>
+      <span className="text-slate-600">:</span>
+      <span className="text-sky-300/90 font-medium">~</span>
+      <span className="text-slate-500 font-semibold ml-1">$</span>
+    </span>
+  );
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -140,7 +152,7 @@ export default function TerminalHero({
       setLines([{ type: "input", text: DEMO_QUESTION }]);
 
       for (const line of DEMO_REPLY) {
-        await sleep(200);
+        await sleep(180);
         setLines((prev) => [
           ...prev,
           { type: "output", text: line, streaming: false },
@@ -179,55 +191,75 @@ export default function TerminalHero({
   // ── Render each output line — split on \n for proper multiline ─────────────
   function renderOutputLine(line: Extract<Line, { type: "output" }>, key: number) {
     const parts = line.text.split("\n");
+    const isError = line.text.startsWith("Oops — something went wrong");
+
     return (
       <div key={key}>
-        {parts.map((part, pi) => (
-          <div
-            key={pi}
-            className="text-[#a8c999] leading-relaxed"
-            style={{ minHeight: part === "" ? "0.5em" : undefined }}
-          >
-            {part === "" ? "\u00a0" : part}
-            {/* Show streaming cursor only on the last visible part of the last line */}
-            {line.streaming && pi === parts.length - 1 && (
-              <span className="inline-block w-[8px] h-[13px] bg-[#22d3ee] animate-pulse ml-0.5 align-middle" />
-            )}
-          </div>
-        ))}
+        {parts.map((part, pi) => {
+          const isSystem = part.startsWith("[system]");
+
+          let textColorClass = "text-slate-300";
+          if (isError) textColorClass = "text-rose-400";
+          else if (isSystem) textColorClass = "text-emerald-400/90 font-medium";
+
+          return (
+            <div
+              key={pi}
+              className={`leading-relaxed text-[13px] ${textColorClass}`}
+              style={{ minHeight: part === "" ? "0.5em" : undefined }}
+            >
+              {part === "" ? "\u00a0" : part}
+              {/* Show streaming cursor only on the last visible part of the last line */}
+              {line.streaming && pi === parts.length - 1 && (
+                <span className="inline-block w-[7px] h-[14px] bg-sky-400/90 animate-pulse ml-1 align-middle rounded-[1px]" />
+              )}
+            </div>
+          );
+        })}
       </div>
     );
   }
 
   return (
     <div
-      className="w-full rounded-xl overflow-hidden border border-white/[0.08] shadow-2xl cursor-text"
+      className="w-full rounded-xl overflow-hidden border border-white/[0.07] bg-[#0c0e15] shadow-2xl shadow-black/60 cursor-text"
       onClick={focusInput}
       role="region"
       aria-label="Interactive terminal — ask Brijesh anything"
     >
-      {/* ── Window chrome — macOS style ── */}
-      <div className="flex items-center gap-1.5 px-4 py-3 bg-[#1a1a1a] border-b border-white/[0.08]">
-        <span className="w-3 h-3 rounded-full bg-[#ff5f57]" />
-        <span className="w-3 h-3 rounded-full bg-[#febc2e]" />
-        <span className="w-3 h-3 rounded-full bg-[#28c840]" />
-        <span className="ml-auto text-[11px] font-mono text-white/25 tracking-widest select-none">
-          brijesh@portfolio
+      {/* ── Window chrome — Compact sleek macOS style ── */}
+      <div className="flex items-center justify-between px-3.5 py-2 bg-[#141724] border-b border-white/[0.06] select-none">
+        <div className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f56]/80 transition-opacity hover:opacity-100" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]/80 transition-opacity hover:opacity-100" />
+          <span className="w-2.5 h-2.5 rounded-full bg-[#27c93f]/80 transition-opacity hover:opacity-100" />
+        </div>
+
+        <div className="flex items-center gap-1.5 text-[11px] font-mono text-slate-400">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80 animate-pulse" />
+          <span className="text-slate-300 font-medium">brijesh@dev</span>
+          <span className="text-slate-600">:</span>
+          <span className="text-sky-400/80">~</span>
+        </div>
+
+        <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider font-semibold">
+          bash
         </span>
       </div>
 
       {/* ── Terminal body ── */}
       <div
         ref={bodyRef}
-        className="bg-[#0d1117] px-5 py-4 font-mono text-sm min-h-[300px] max-h-[400px] overflow-y-auto"
+        className="terminal-scrollbar bg-[#0c0e15] px-4.5 py-3.5 font-mono text-sm min-h-[300px] max-h-[400px] overflow-y-auto"
         style={{ lineHeight: "1.7", scrollBehavior: "auto" }}
       >
         {lines.map((line, i) => {
-          if (line.type === "empty") return <div key={i} className="h-4" />;
+          if (line.type === "empty") return <div key={i} className="h-3" />;
           if (line.type === "input") {
             return (
-              <div key={i} className="flex flex-wrap">
-                <span className="text-[#3ddc84] shrink-0 select-none">{PROMPT_PREFIX}</span>
-                <span className="text-[#79c0ff]">{line.text}</span>
+              <div key={i} className="flex flex-wrap items-baseline">
+                <PromptPrefix />
+                <span className="text-sky-200/90 font-normal">{line.text}</span>
               </div>
             );
           }
@@ -237,13 +269,14 @@ export default function TerminalHero({
         {/* ── Active input row ── */}
         {demoComplete && (
           <form onSubmit={handleSubmit} className="flex items-center mt-2 w-full">
-            <span className="text-[#3ddc84] shrink-0 select-none">{PROMPT_PREFIX}</span>
+            <PromptPrefix />
             <div className="relative flex-1 flex items-center min-w-0">
-              <span className="text-[#79c0ff] whitespace-pre">{inputValue}</span>
+              <span className="text-sky-200/90 font-normal whitespace-pre">{inputValue}</span>
               {!isStreaming && (
                 <span
-                  className={`inline-block w-[8px] h-[15px] ml-px align-middle ${isFocused ? "bg-[#79c0ff] animate-pulse" : "bg-[#79c0ff]/30"
-                    }`}
+                  className={`inline-block w-[7px] h-[15px] ml-0.5 align-middle rounded-[1px] ${
+                    isFocused ? "bg-sky-400/90 animate-pulse" : "bg-sky-400/30"
+                  }`}
                 />
               )}
               <input

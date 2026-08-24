@@ -138,7 +138,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         style={{ transform: hovered ? "scaleX(1)" : "scaleX(0)" }}
       />
 
-      {/* 3D Popover Image Preview */}
+            {/* 3D Popover Image Preview */}
       <AnimatePresence>
         {hovered && (
           <motion.div
@@ -146,14 +146,14 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             animate={{ opacity: 1, y: 0, scale: 1, rotateX: 15, rotateZ: -2 }}
             exit={{ opacity: 0, y: 20, scale: 0.9, rotateX: 25, rotateZ: -5 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            className="absolute top-4 right-4 md:top-8 md:right-8 w-40 h-28 md:w-56 md:h-36 bg-white rounded-xl shadow-2xl z-20 pointer-events-none flex flex-col overflow-hidden border-2 border-white/20"
+            className="absolute top-4 right-4 md:top-8 md:right-8 w-40 h-28 md:w-56 md:h-36 bg-[#161822] rounded-xl shadow-2xl z-20 pointer-events-none flex flex-col overflow-hidden border border-white/20"
             style={{ transformStyle: "preserve-3d" }}
           >
             {/* Simulated browser/window chrome */}
-            <div className="h-4 md:h-6 bg-slate-100 border-b border-slate-200 flex items-center px-2 gap-1.5 shrink-0">
-              <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-red-400" />
-              <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-amber-400" />
-              <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-400" />
+            <div className="h-4 md:h-6 bg-[#1f2333] border-b border-white/[0.08] flex items-center px-2 gap-1.5 shrink-0">
+              <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-red-400/80" />
+              <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-amber-400/80" />
+              <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-emerald-400/80" />
             </div>
             {/* Inner Content */}
             <div className="flex-1 bg-[#0a0a0f] relative overflow-hidden flex flex-col items-center justify-center">
@@ -168,12 +168,12 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 />
               ) : (
                 <>
-                  <div className="text-xl md:text-3xl font-heading font-black text-slate-800 opacity-20 absolute">
+                  <div className="text-xl md:text-3xl font-heading font-black text-slate-400 opacity-20 absolute">
                     {typeof project.icon === "string" && !project.icon.startsWith("/") ? project.icon : project.name.slice(0, 2)}
                   </div>
                 </>
               )}
-              <div className="mt-auto mb-2 font-heading font-bold text-[8px] md:text-xs text-slate-800 z-10 bg-white/80 px-2 py-1 rounded shadow-sm backdrop-blur-sm">
+              <div className="mt-auto mb-2 font-heading font-bold text-[8px] md:text-xs text-slate-200 z-10 bg-slate-900/90 border border-white/10 px-2 py-1 rounded shadow-sm backdrop-blur-sm">
                 {project.name}
               </div>
             </div>
@@ -185,7 +185,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       <div className="flex items-start justify-between mb-4 relative z-10">
         {/* Icon */}
         <div
-          className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-xs font-bold font-mono text-white tracking-widest relative overflow-hidden"
+          className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-xs font-bold font-mono text-slate-200 tracking-widest relative overflow-hidden"
           style={{ background: project.iconBg }}
         >
           {typeof project.icon === "string" ? (
@@ -206,7 +206,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-400 bg-white/[0.04] border border-white/[0.07] rounded-lg p-2 flex items-center transition-colors duration-200 hover:text-white hover:border-white/20 hover:bg-white/[0.08] z-30 relative"
+              className="text-slate-400 bg-slate-900/80 border border-slate-800 rounded-lg p-2 flex items-center transition-colors duration-200 hover:text-slate-100 hover:border-slate-700 hover:bg-slate-800 z-30 relative"
             >
               <ExternalIcon size={14} />
             </a>
@@ -216,7 +216,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-zinc-400 bg-white/[0.04] border border-white/[0.07] rounded-lg p-2 flex items-center transition-colors duration-200 hover:text-[#f1f0f5] hover:border-white/25 hover:bg-white/[0.08] z-30 relative"
+              className="text-slate-400 bg-slate-900/80 border border-slate-800 rounded-lg p-2 flex items-center transition-colors duration-200 hover:text-slate-100 hover:border-slate-700 hover:bg-slate-800 z-30 relative"
             >
               <GitHubIcon size={15} />
             </a>
@@ -225,13 +225,13 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       </div>
 
       {/* Name */}
-      <h3 className="text-[#f1f0f5] text-base font-semibold font-heading mb-2 relative z-10">
+      <h3 className="text-slate-100 text-base font-semibold font-heading mb-2 relative z-10">
         {project.name}
       </h3>
 
       {/* Description */}
       <p
-        className="text-[#7a7a8c] text-xs leading-relaxed font-sans mb-5 flex-1 transition-all duration-300 relative z-10 opacity-90"
+        className="text-slate-400 text-xs leading-relaxed font-sans mb-5 flex-1 transition-all duration-300 relative z-10 opacity-90"
       >
         {project.longDesc}
       </p>
@@ -241,7 +241,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         {project.stack.map((s) => (
           <span
             key={s}
-            className="text-[10px] font-mono text-zinc-300 tracking-wider bg-white/[0.04] border border-white/[0.08] rounded px-2.5 py-1 uppercase"
+            className="text-[10px] font-mono text-slate-300 tracking-wider bg-slate-900/80 border border-slate-800 rounded px-2.5 py-1 uppercase"
           >
             {s}
           </span>
@@ -259,7 +259,7 @@ export default function Projects() {
     <div className="w-full max-w-5xl mx-auto mt-24 px-4 md:px-8">
       {/* Section heading */}
       <div className="flex items-center gap-3 mb-2">
-        <div className="text-zinc-300 bg-white/[0.04] border border-white/[0.08] rounded-lg p-2 flex">
+        <div className="text-slate-300 bg-slate-900/80 border border-slate-800 rounded-lg p-2 flex">
           <svg
             width="20"
             height="20"
@@ -274,11 +274,11 @@ export default function Projects() {
             <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
           </svg>
         </div>
-        <h2 className="text-[#f1f0f5] font-heading text-2xl font-bold tracking-tight">
+        <h2 className="text-slate-100 font-heading text-2xl font-bold tracking-tight">
           Featured Projects
         </h2>
       </div>
-      <p className="text-[#7a7a8c] text-xs font-[family-name:var(--font-jakarta)] mb-10">
+      <p className="text-slate-400 text-xs font-[family-name:var(--font-jakarta)] mb-10">
         Showcasing my most ambitious full-stack and AI applications.
       </p>
 

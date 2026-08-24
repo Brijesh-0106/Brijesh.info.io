@@ -90,21 +90,21 @@ function CardContent({ exp }: { exp: ExpItem }) {
   return (
     <div className="relative z-10">
       {/* Row 1: Role title */}
-      <h3 className="text-base font-bold text-[#f1f0f5] font-heading leading-tight mb-2">
+      <h3 className="text-base font-bold text-slate-100 font-heading leading-tight mb-2">
         {exp.role}
       </h3>
 
       {/* Row 2: Company + badges LEFT, period RIGHT — no wrap */}
       <div className="flex items-center justify-between gap-3 mb-4">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-zinc-200 font-semibold font-mono text-xs">{exp.company}</span>
+          <span className="text-slate-200 font-semibold font-mono text-xs">{exp.company}</span>
           {exp.website && (
-            <a href={exp.website} target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-white transition-colors">
+            <a href={exp.website} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-slate-200 transition-colors">
               <WebIcon />
             </a>
           )}
           {exp.linkedin && (
-            <a href={exp.linkedin} target="_blank" rel="noreferrer" className="text-zinc-400 hover:text-white transition-colors">
+            <a href={exp.linkedin} target="_blank" rel="noreferrer" className="text-slate-400 hover:text-slate-200 transition-colors">
               <LinkedInIcon />
             </a>
           )}
@@ -114,29 +114,29 @@ function CardContent({ exp }: { exp: ExpItem }) {
             </span>
           )}
         </div>
-        <span className="text-zinc-300 text-[11px] font-medium font-mono whitespace-nowrap bg-white/[0.04] px-2.5 py-1 rounded-full border border-white/[0.08] shrink-0">
+        <span className="text-slate-300 text-[11px] font-medium font-mono whitespace-nowrap bg-slate-900/80 px-2.5 py-1 rounded-full border border-slate-800 shrink-0">
           {exp.period}
         </span>
       </div>
 
-      <p className="text-zinc-400 text-sm leading-relaxed mb-4 font-sans">
+      <p className="text-slate-400 text-sm leading-relaxed mb-4 font-sans">
         {exp.description}
       </p>
 
       <ul className="flex flex-col gap-2.5 mb-4">
         {exp.bullets.map((b, i) => (
           <li key={i} className="flex gap-2.5 items-start">
-            <div className="w-4 h-4 rounded-full bg-[#0a0a12] border border-white/[0.08] flex items-center justify-center shrink-0 mt-0.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-zinc-400" />
+            <div className="w-4 h-4 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-1.5 h-1.5 rounded-full bg-slate-400" />
             </div>
-            <span className="text-zinc-400 text-xs leading-relaxed font-sans">{b}</span>
+            <span className="text-slate-400 text-xs leading-relaxed font-sans">{b}</span>
           </li>
         ))}
       </ul>
 
       <div className="flex flex-wrap gap-1.5">
         {exp.stack.map((s) => (
-          <span key={s} className="text-[11px] font-mono text-zinc-300 bg-white/[0.04] border border-white/[0.08] rounded px-2.5 py-1">
+          <span key={s} className="text-[11px] font-mono text-slate-300 bg-slate-900/80 border border-slate-800 rounded px-2.5 py-1">
             {s}
           </span>
         ))}
@@ -149,13 +149,13 @@ function CardContent({ exp }: { exp: ExpItem }) {
 function SectionHeading() {
   return (
     <div className="flex items-center gap-2 md:gap-3">
-      <div className="text-zinc-300 bg-white/[0.04] border border-white/[0.08] rounded-lg p-1.5 md:p-2">
+      <div className="text-slate-300 bg-slate-900/80 border border-slate-800 rounded-lg p-1.5 md:p-2">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <rect x="2" y="7" width="20" height="14" rx="2" />
           <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
         </svg>
       </div>
-      <h2 className="text-white text-2xl font-bold font-heading tracking-tight">
+      <h2 className="text-slate-100 text-2xl font-bold font-heading tracking-tight">
         Experience
       </h2>
     </div>

@@ -22,16 +22,31 @@ export async function POST(req: NextRequest) {
 
   const groq = new Groq({ apiKey });
 
-  const stream = await groq.chat.completions.create({
-    model: "llama-3.3-70b-versatile",
-    messages: [
-      { role: "system", content: PORTFOLIO_CONTEXT },
-      { role: "user", content: question },
-    ],
-    max_tokens: 300,
-    temperature: 0.7,
-    stream: true,
-  });
+  let stream;
+  try {
+    stream = await groq.chat.completions.create({
+      model: "llama-3.1-8b-instant",
+      messages: [
+        { role: "system", content: PORTFOLIO_CONTEXT },
+        { role: "user", content: question },
+      ],
+      max_tokens: 350,
+      temperature: 0.7,
+      stream: true,
+    });
+  } catch (err) {
+    console.error("Groq primary model error, retrying fallback:", err);
+    stream = await groq.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
+      messages: [
+        { role: "system", content: PORTFOLIO_CONTEXT },
+        { role: "user", content: question },
+      ],
+      max_tokens: 350,
+      temperature: 0.7,
+      stream: true,
+    });
+  }
 
   // Convert Groq async iterator to a Web ReadableStream
   const readableStream = new ReadableStream({

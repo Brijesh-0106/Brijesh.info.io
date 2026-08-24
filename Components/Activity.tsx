@@ -35,7 +35,7 @@ function ExternalLinkIcon() {
 function Stat({
   value,
   label,
-  colorClass = "text-white",
+  colorClass = "text-slate-100",
 }: {
   value: string | number;
   label: string;
@@ -90,7 +90,7 @@ export default function Activity() {
           setLcRanking(data.data.matchedUser.profile.ranking);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
 
     // Fetch dynamic GitHub stats & PRs
     fetch("/api/github")
@@ -103,14 +103,14 @@ export default function Activity() {
           setDynamicRepos(data.openSource.repos);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   return (
     <div className="w-full max-w-5xl mx-auto mt-24 px-4 md:px-8">
       {/* Section heading */}
       <div className="flex items-center gap-3 mb-8">
-        <div className="text-zinc-300 bg-white/[0.04] border border-white/[0.08] rounded-lg p-2 flex">
+        <div className="text-slate-300 bg-slate-900/80 border border-slate-800 rounded-lg p-2 flex">
           <svg
             width="20"
             height="20"
@@ -125,7 +125,7 @@ export default function Activity() {
             <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 Z" />
           </svg>
         </div>
-        <h2 className="text-white font-heading text-2xl font-bold tracking-tight">
+        <h2 className="text-slate-100 font-heading text-2xl font-bold tracking-tight">
           Code Activity
         </h2>
       </div>
@@ -135,11 +135,11 @@ export default function Activity() {
         <div className="flex flex-col md:flex-row md:items-start justify-between mb-8 gap-6">
           {/* Left: icon + name + profile link */}
           <div className="flex items-center gap-4">
-            <div className="text-white flex items-center justify-center w-12 h-12 bg-white/5 border border-white/10 rounded-xl shrink-0">
+            <div className="text-slate-200 flex items-center justify-center w-12 h-12 bg-slate-900/80 border border-slate-800 rounded-xl shrink-0">
               <GitHubIcon size={24} />
             </div>
             <div>
-              <p className="text-white text-sm font-bold tracking-widest font-sans mb-1 uppercase">
+              <p className="text-slate-200 text-sm font-bold tracking-widest font-sans mb-1 uppercase">
                 Github
               </p>
               {/* Profile link */}
@@ -147,7 +147,7 @@ export default function Activity() {
                 href="https://github.com/Brijesh-0106"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-slate-400 hover:text-white text-xs font-mono transition-colors duration-200"
+                className="inline-flex items-center gap-1.5 text-slate-400 hover:text-slate-200 text-xs font-mono transition-colors duration-200"
               >
                 @Brijesh-0106
                 <ExternalLinkIcon />
@@ -157,7 +157,7 @@ export default function Activity() {
 
           {/* Right: stats */}
           <div className="flex gap-6 md:gap-8 justify-between md:justify-end">
-            <Stat value={ghStats.contributions || "--"} label="CONTRIBUTIONS" />
+            {/* <Stat value={ghStats.contributions || "--"} label="CONTRIBUTIONS" /> */}
             <Stat value={ghStats.repos || "--"} label="REPOS" />
             <Stat value={ghStats.maxStreak || "--"} label="MAX STREAK" colorClass="text-zinc-200" />
           </div>

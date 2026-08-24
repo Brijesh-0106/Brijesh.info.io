@@ -158,7 +158,7 @@ export default function LeetCodeHeatmap({ easy, medium, hard, total, ranking }: 
           <div>
             <p
               style={{
-                color: "#fff",
+                color: "#e2e8f0",
                 fontSize: 14,
                 fontWeight: 700,
                 letterSpacing: "0.1em",
@@ -212,7 +212,7 @@ export default function LeetCodeHeatmap({ easy, medium, hard, total, ranking }: 
           <div style={{ textAlign: "right" }}>
             <p
               style={{
-                color: "#fff",
+                color: "#e2e8f0",
                 fontSize: 22,
                 fontWeight: 700,
                 fontFamily: "Space Mono, monospace",
@@ -237,7 +237,7 @@ export default function LeetCodeHeatmap({ easy, medium, hard, total, ranking }: 
           <div style={{ textAlign: "right" }}>
             <p
               style={{
-                color: "#fff",
+                color: "#e2e8f0",
                 fontSize: 22,
                 fontWeight: 700,
                 fontFamily: "Space Mono, monospace",
