@@ -7,4 +7,4 @@ ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 RUN npm run build
 EXPOSE 3000
-CMD ["node", ".next/standalone/server.js"]
+CMD ["npm","run", "start"]
