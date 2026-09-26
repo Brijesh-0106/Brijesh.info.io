@@ -35,6 +35,6 @@ jobs:
             sudo docker pull brijesh408/portfolio:v${{github.run_number}}
             sudo docker stop portfolio || true
             sudo docker rm portfolio || true
-            sudo docker run -d --restart unless-stopped -e GROQ_API_KEY=${{secrets.GROQ_API_KEY}} --name portfolio -p 3001:3000 brijesh408/portfolio:v${{github.run_number}}
+            sudo docker run -d --restart unless-stopped -e GROQ_API_KEY=${{secrets.GROQ_API_KEY}} --name portfolio -p 3000:3000 brijesh408/portfolio:v${{github.run_number}}
             sleep 5
             sudo docker ps
