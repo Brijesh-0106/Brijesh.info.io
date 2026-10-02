@@ -26,7 +26,7 @@ const PROJECTS: Project[] = [
     longDesc:
       "High-performance cloud IDE platform provisioning browser-based VS Code environments on-demand in AWS EC2. Features an Active-Heartbeat lifecycling engine with S3 cold storage and AWS Auto Scaling Groups to auto-terminate idle instances and cut cloud compute waste by 90%.",
     stack: ["React", "TypeScript", "Node.js", "AWS EC2/S3", "Redis", "Docker", "MongoDB"],
-    liveUrl: "https://kanvas.usecerebro.co.in",
+    liveUrl: "https://kanvas.advertises.co.in",
     githubUrl: "https://github.com/Brijesh-0106/Kanvas-replit",
     featured: true,
     icon: "/kanvas.svg",
@@ -138,7 +138,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         style={{ transform: hovered ? "scaleX(1)" : "scaleX(0)" }}
       />
 
-            {/* 3D Popover Image Preview */}
+      {/* 3D Popover Image Preview */}
       <AnimatePresence>
         {hovered && (
           <motion.div

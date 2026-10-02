@@ -53,7 +53,7 @@ Kanvas — Cloud IDE Platform & Replit Clone
 • High-performance cloud development platform provisioning on-demand browser VS Code environments in AWS EC2
 • Active-Heartbeat lifecycling engine with S3 cold storage & AWS Auto Scaling Groups cutting cloud compute waste by 90%
 • Features in-VM file-sync daemon, multi-language runtimes (Node, React, Python, Java), and Groq AI coding assistant
-• Live: https://kanvas.usecerebro.co.in | Code: https://github.com/Brijesh-0106/Kanvas-replit
+• Live: https://kanvas.advertises.co.in | Code: https://github.com/Brijesh-0106/Kanvas-replit
 
 Cerebro — AI-powered "Second Brain"
 • Full-stack RAG app for saving content from YouTube, Twitter, and articles
